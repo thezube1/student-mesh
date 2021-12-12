@@ -4,13 +4,13 @@ contract Students {
 
     event Student(address indexed _from, string _value);
 
-    string[] public students;
+    string[] public students = ["Zubin", "Oliver", "Julian"];
     function add(string memory x) public {
         students.push(x);
         emit Student(msg.sender, x);
     }
 
-    function get(uint pos) public view returns (string memory) {
-        return students[pos];
+    function get() public view returns (string memory) {
+        return students[0];
     }
 }

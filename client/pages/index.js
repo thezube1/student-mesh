@@ -1,6 +1,8 @@
 import Head from "next/head";
 import React, { Component } from "react";
 
+import GetStudent from "../components/contracts/GetStudent";
+
 class Home extends React.Component {
   state = { loading: true, drizzleState: null };
   componentDidMount() {
@@ -37,6 +39,10 @@ class Home extends React.Component {
           <div id="content">
             <div className="title">Student-mesh</div>
             <div>
+              <GetStudent
+                drizzle={this.props.drizzle}
+                drizzleState={this.state.drizzleState}
+              />
               <input type="text" />
               <button className="button">Add</button>
             </div>
