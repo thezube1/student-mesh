@@ -2,6 +2,7 @@ import Head from "next/head";
 import React, { Component } from "react";
 
 import GetStudent from "../components/contracts/GetStudent";
+import AddStudent from "../components/contracts/AddStudent";
 
 class Home extends React.Component {
   state = { loading: true, drizzleState: null };
@@ -43,8 +44,10 @@ class Home extends React.Component {
                 drizzle={this.props.drizzle}
                 drizzleState={this.state.drizzleState}
               />
-              <input type="text" />
-              <button className="button">Add</button>
+              <AddStudent
+                drizzle={this.props.drizzle}
+                drizzleState={this.state.drizzleState}
+              />
             </div>
           </div>
         </div>

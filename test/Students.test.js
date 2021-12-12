@@ -5,12 +5,11 @@ const truffleAssert = require("truffle-assertions");
 contract("Students test", (accounts) => {
   it("should add a student's name", async () => {
     const insert = await Students.deployed();
-    const func = await insert.add("Zubin");
-    truffleAssert.eventEmitted(func, "Student", (ev) => {
-      console.log(ev._value);
-      return ev;
-    });
+    await insert.add("Zubin");
+    await insert.add("Kevin");
+    const array = await insert.get();
 
-    assert.equal(await insert.get(0), "Zubin");
+    assert.equal(array[0], "Zubin");
+    assert.equal(array[1], "Kevin");
   });
 });
