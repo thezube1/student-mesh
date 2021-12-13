@@ -8,6 +8,7 @@ class GetStudents extends React.Component {
 
   componentDidMount() {
     const { drizzle, drizzleState } = this.props;
+    console.log(drizzle);
     const contract = drizzle.contracts.Students;
     const dataKey = contract.methods["get"].cacheCall();
     this.setState({ dataKey });

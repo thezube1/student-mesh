@@ -5,10 +5,13 @@ import Students from "../contracts/Students.json";
 
 const options = {
   contracts: [Students],
+  events: {
+    Students: ["Student"],
+  },
   web3: {
     fallback: {
       type: "ws",
-      url: "ws://127.0.0.1:9545",
+      url: "ws://127.0.0.1:7545",
     },
   },
 };
