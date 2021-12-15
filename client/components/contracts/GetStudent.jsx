@@ -15,10 +15,6 @@ class GetStudents extends React.Component {
     this.getPastEvents();
   }
 
-  componentDidUpdate() {
-    this.getPastEvents();
-  }
-
   getPastEvents = async () => {
     const web3 = this.props.drizzle.web3;
     const contract = this.props.drizzle.contracts.Students;

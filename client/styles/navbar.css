@@ -1,0 +1,19 @@
+#navbar-wrapper {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-top: 25px;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.navbar-item {
+  line-height: 1;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 20px;
+  margin-right: 25px;
+}
