@@ -2,15 +2,12 @@ import "../styles/globals.css";
 import "../styles/home.css";
 import "../styles/navbar.css";
 import "../styles/connect.css";
-import { DrizzleContext } from "@drizzle/react-plugin";
-import { Drizzle } from "@drizzle/store";
-import Students from "../contracts/Students.json";
 
 import { Web3ReactProvider } from "@web3-react/core";
-import Web3 from "web3";
 
 import LoadingWheel from "../components/loading/LoadingWheel";
 
+/*
 const options = {
   contracts: [Students],
   events: {
@@ -24,32 +21,19 @@ const options = {
   },
 };
 
-const drizzle = new Drizzle(options);
 
-function getLibrary(provider) {
-  return new Web3(provider);
+
+const drizzle = new Drizzle(options);
+*/
+
+function getLibrary(provider, connector) {
+  return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
 }
 
 function MyApp({ Component, pageProps }) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <DrizzleContext.Provider drizzle={drizzle}>
-        <DrizzleContext.Consumer>
-          {(drizzleContext) => {
-            const { drizzle, drizzleState, initialized } = drizzleContext;
-            if (!initialized) {
-              return <LoadingWheel />;
-            }
-            return (
-              <Component
-                {...pageProps}
-                drizzle={drizzle}
-                drizzleState={drizzleState}
-              />
-            );
-          }}
-        </DrizzleContext.Consumer>
-      </DrizzleContext.Provider>
+      <Component {...pageProps} />
     </Web3ReactProvider>
   );
 }
