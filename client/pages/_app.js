@@ -4,7 +4,7 @@ import "../styles/navbar.css";
 import "../styles/connect.css";
 
 import { Web3ReactProvider } from "@web3-react/core";
-
+import { MetaMaskProvider } from "metamask-react";
 import LoadingWheel from "../components/loading/LoadingWheel";
 
 /*
@@ -27,13 +27,17 @@ const drizzle = new Drizzle(options);
 */
 
 function getLibrary(provider, connector) {
-  return new Web3Provider(provider); // this will vary according to whether you use e.g. ethers or web3.js
+  const library = new Web3Provider(provider, "any"); // this will vary according to whether you use e.g. ethers or web3.js
+  library.pollingInterval = 15000;
+  return library;
 }
 
 function MyApp({ Component, pageProps }) {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
-      <Component {...pageProps} />
+      <MetaMaskProvider>
+        <Component {...pageProps} />
+      </MetaMaskProvider>
     </Web3ReactProvider>
   );
 }

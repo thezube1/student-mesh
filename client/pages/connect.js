@@ -1,49 +1,39 @@
-import { useWeb3React } from "@web3-react/core";
-import { injected } from "../components/wallet/Injected";
 import Navbar from "../components/navbar/navbar";
+import { useMetaMask } from "metamask-react";
+import Link from "next/link";
 
 export default function ConnectPage() {
-  const { active, account, library, connector, activate, deactivate } =
+  /*const { active, account, library, connector, activate, deactivate } =
     useWeb3React();
-
-  async function connect() {
-    try {
-      await activate(injected);
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
-  async function disconnect() {
-    try {
-      deactivate();
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
+    */
+  const { status, connect, account } = useMetaMask();
 
   return (
     <div>
       <Navbar />
       <div id="connect-wrapper">
         <div id="connect-content">
-          <div>
-            <button onClick={connect} className="button">
-              Connect Wallet
-            </button>
-          </div>
-          {active ? (
-            <span>
-              Connected with <b>{account}</b>
-            </span>
+          {status === "connected" ? (
+            <div style={{ display: "grid", justifyItems: "center" }}>
+              <div className="text" style={{ marginBottom: 10 }}>
+                Connected with <b>{account}</b>
+              </div>
+              <Link href="/account">
+                <button onClick={connect} className="button">
+                  View Account
+                </button>
+              </Link>
+            </div>
           ) : (
-            <span>Not connected</span>
+            <div style={{ display: "grid", justifyItems: "center" }}>
+              <button onClick={connect} className="button">
+                Connect Wallet
+              </button>
+              <div className="text" style={{ marginTop: 10 }}>
+                Not connected
+              </div>
+            </div>
           )}
-          <div>
-            <button onClick={disconnect} className="button">
-              Disconnect Wallet
-            </button>
-          </div>
         </div>
       </div>
     </div>
