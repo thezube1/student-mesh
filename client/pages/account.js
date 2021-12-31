@@ -6,7 +6,11 @@ function AccountPage() {
   return (
     <div>
       <Navbar />
-      <div></div>
+      <div id="account-wrapper">
+        <div id="account-content">
+          <div className="text">Account</div>
+        </div>
+      </div>
     </div>
   );
 }
