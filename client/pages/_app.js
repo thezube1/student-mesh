@@ -1,44 +1,27 @@
+// CSS files
 import "../styles/globals.css";
 import "../styles/home.css";
 import "../styles/navbar.css";
 import "../styles/connect.css";
+import "../styles/account.css";
 
-import { Web3ReactProvider } from "@web3-react/core";
-import { MetaMaskProvider } from "metamask-react";
+// Imports
+import store from "../redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 import LoadingWheel from "../components/loading/LoadingWheel";
-
-/*
-const options = {
-  contracts: [Students],
-  events: {
-    Students: ["Student"],
-  },
-  web3: {
-    fallback: {
-      type: "ws",
-      url: "ws://127.0.0.1:7545",
-    },
-  },
-};
-
-
-
-const drizzle = new Drizzle(options);
-*/
-
-function getLibrary(provider, connector) {
-  const library = new Web3Provider(provider, "any"); // this will vary according to whether you use e.g. ethers or web3.js
-  library.pollingInterval = 15000;
-  return library;
-}
+import CheckAccount from "../components/routes/checkAccount";
 
 function MyApp({ Component, pageProps }) {
+  let persistor = persistStore(store);
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <MetaMaskProvider>
+    <Provider store={store}>
+      <PersistGate loading={<LoadingWheel />} persistor={persistor}>
+        <CheckAccount />
         <Component {...pageProps} />
-      </MetaMaskProvider>
-    </Web3ReactProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 

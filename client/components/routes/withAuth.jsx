@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 const withAuth = (WrappedComponent) => {
   return (props) => {
     // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const Router = useRouter();
 
-      if (!window.ethereum || !window.ethereum.selectedAddress) {
+      const address = useSelector((state) => state.web3.account);
+
+      if (!web3 || !address) {
         Router.replace("/");
         return null;
       }
