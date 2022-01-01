@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Navbar from "../components/navbar/navbar";
 
 function Home() {
-  const account = useSelector((state) => state.web3.account);
+  const account = useSelector((state) => state.account.account);
 
   return (
     <div>

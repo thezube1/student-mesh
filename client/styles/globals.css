@@ -20,6 +20,32 @@ a {
   font-size: 18px;
 }
 
+.form-error {
+  color: red;
+  margin-bottom: 10px;
+  justify-self: left;
+}
+
+.input {
+  outline: none;
+  max-width: 200px;
+  width: 90vw;
+  background-color: rgb(231, 231, 231);
+  border-color: rgb(231, 231, 231);
+  border-style: solid;
+  padding: 10px;
+  border-radius: 10px;
+  height: 40px;
+  font-family: "Cabin";
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.input:focus {
+  background-color: white;
+  border-color: black;
+  border-style: solid;
+}
+
 #loadingWrapper {
   width: 100vw;
   height: 100vh;

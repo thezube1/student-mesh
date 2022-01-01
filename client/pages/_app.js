@@ -11,14 +11,14 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import LoadingWheel from "../components/loading/LoadingWheel";
-import CheckAccount from "../components/routes/checkAccount";
+import LoadBlockchain from "../components/routes/loadBlockchain";
 
 function MyApp({ Component, pageProps }) {
   let persistor = persistStore(store);
   return (
     <Provider store={store}>
       <PersistGate loading={<LoadingWheel />} persistor={persistor}>
-        <CheckAccount />
+        <LoadBlockchain />
         <Component {...pageProps} />
       </PersistGate>
     </Provider>

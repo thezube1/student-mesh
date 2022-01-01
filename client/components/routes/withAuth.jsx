@@ -6,7 +6,7 @@ const withAuth = (WrappedComponent) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
 
-      const address = useSelector((state) => state.web3.account);
+      const address = useSelector((state) => state.account.account);
 
       if (!web3 || !address) {
         Router.replace("/");

@@ -1,7 +1,17 @@
 #account-wrapper {
   width: 100%;
   height: 100vh;
+}
+
+#account-content {
+  width: 100%;
+  height: 100vh;
   display: grid;
   justify-content: center;
   align-items: center;
+}
+
+#account-signup {
+  display: grid;
+  justify-items: center;
 }

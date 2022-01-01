@@ -2,11 +2,11 @@ import Navbar from "../components/navbar/navbar";
 import Link from "next/link";
 import Web3 from "web3";
 import { useSelector, useDispatch } from "react-redux";
-import { setAccount, setWeb3 } from "../redux/reducers/web3Reducer";
+import { setAccount, setWeb3 } from "../redux/reducers/accountReducer";
 import { useEffect } from "react";
 
 function ConnectPage() {
-  const account = useSelector((state) => state.web3.account);
+  const account = useSelector((state) => state.account.account);
   const dispatch = useDispatch();
 
   const connect = async () => {

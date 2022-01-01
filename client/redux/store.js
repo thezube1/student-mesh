@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import web3Reducer from "./reducers/web3Reducer";
+import accountReducer from "./reducers/accountReducer";
+import contractReducer from "./reducers/contractReducer";
 import { combineReducers } from "redux";
 
 import {
@@ -18,10 +19,12 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
+  blacklist: ["contract"],
 };
 
 const rootReducer = combineReducers({
-  web3: web3Reducer,
+  account: accountReducer,
+  contract: contractReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
