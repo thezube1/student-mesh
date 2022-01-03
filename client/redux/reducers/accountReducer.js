@@ -4,6 +4,7 @@ export const accountSlice = createSlice({
   name: "account",
   initialState: {
     account: null,
+    name: { first: null, last: null },
   },
   reducers: {
     setAccount: (state, action) => {
@@ -12,9 +13,15 @@ export const accountSlice = createSlice({
         account: action.payload,
       };
     },
+    setName: (state, action) => {
+      return {
+        ...state,
+        name: { first: action.payload.first, last: action.payload.last },
+      };
+    },
   },
 });
 
-export const { setAccount } = accountSlice.actions;
+export const { setAccount, setName } = accountSlice.actions;
 
 export default accountSlice.reducer;

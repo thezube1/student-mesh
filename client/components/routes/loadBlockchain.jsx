@@ -1,7 +1,7 @@
 import Web3 from "web3";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { setAccount } from "../../redux/reducers/accountReducer";
+import { setAccount, setName } from "../../redux/reducers/accountReducer";
 import { setRegistered } from "../../redux/reducers/contractReducer";
 import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../config";
 
@@ -28,6 +28,12 @@ function LoadBlockchain() {
         });
         if (data.length !== 0) {
           dispatch(setRegistered(true));
+          dispatch(
+            setName({
+              first: data[0].returnValues._first,
+              last: data[0].returnValues._last,
+            })
+          );
         } else {
           dispatch(setRegistered(false));
         }
@@ -40,7 +46,7 @@ function LoadBlockchain() {
   useEffect(() => {
     loadBlockChainData();
   });
-  return <div></div>;
+  return <></>;
 }
 
 export default LoadBlockchain;
