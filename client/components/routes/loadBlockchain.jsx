@@ -14,7 +14,10 @@ function LoadBlockchain() {
       const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
       const accounts = await web3.eth.getAccounts();
       dispatch(setAccount(accounts[0]));
-
+    } else {
+      console.log("No metamask detected");
+    }
+    /*
       // get contract
       if (accounts[0]) {
         const studentContract = new web3.eth.Contract(
@@ -41,6 +44,7 @@ function LoadBlockchain() {
     } else {
       console.log("No metamask detected");
     }
+    */
   };
 
   useEffect(() => {
