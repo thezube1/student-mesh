@@ -3,6 +3,10 @@ import { useState } from "react";
 
 function CreateExchangePage() {
   const [error, setError] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(undefined);
+  console.log(selectedFile);
+
+  // on submit display modal to confirm
 
   return (
     <div>
@@ -17,7 +21,7 @@ function CreateExchangePage() {
           ) : (
             false
           )}
-          <div>
+          <div style={{ display: "grid", justifyItems: "center" }}>
             <div>
               <input
                 type="text"
@@ -33,10 +37,17 @@ function CreateExchangePage() {
               />
             </div>
             <div id="provider-upload-wrapper">
-              <div className="text">Upload File:</div>
+              <div className="text" style={{ fontSize: 14 }}>
+                Upload File:
+              </div>
               <label className="button" id="provider-upload-button">
-                <input type="file" />
-                Select
+                <input
+                  type="file"
+                  onChange={(e) => {
+                    setSelectedFile(e.target.files[0]);
+                  }}
+                />
+                {selectedFile === undefined ? "Select" : selectedFile.name}
               </label>
             </div>
           </div>
