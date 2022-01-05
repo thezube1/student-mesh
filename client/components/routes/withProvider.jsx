@@ -1,15 +1,14 @@
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-const withAuth = (WrappedComponent) => {
+const withProvider = (WrappedComponent) => {
   return (props) => {
     // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const Router = useRouter();
 
-      const address = useSelector((state) => state.account.account);
       const provider = useSelector((state) => state.account.provider);
 
-      if (!web3 || !address) {
+      if (!provider) {
         Router.replace("/");
         return null;
       }
@@ -24,4 +23,4 @@ const withAuth = (WrappedComponent) => {
   };
 };
 
-export default withAuth;
+export default withProvider;

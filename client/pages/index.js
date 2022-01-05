@@ -2,10 +2,13 @@ import Head from "next/head";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-import Navbar from "../components/navbar/navbar";
+import AccountHome from "../components/home/account/AccountHome";
+import ProviderHome from "../components/home/provider/ProviderHome";
+import DefaultHome from "../components/home/default/DefaultHome";
 
 function Home() {
   const account = useSelector((state) => state.account.account);
+  const provider = useSelector((state) => state.account.provider);
 
   return (
     <div>
@@ -17,24 +20,13 @@ function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Navbar />
-      <div id="wrapper">
-        <div id="content">
-          <div className="title">Student-Mesh</div>
-          <div className="header">
-            A distributed computing solution to storing student data
-          </div>
-          {account ? (
-            <Link href="/account">
-              <div className="button">View Account</div>
-            </Link>
-          ) : (
-            <Link href="/connect">
-              <div className="button">Connect to Metamask</div>
-            </Link>
-          )}
-        </div>
-      </div>
+      {provider && account !== null ? (
+        <ProviderHome />
+      ) : account !== null ? (
+        <AccountHome />
+      ) : (
+        <DefaultHome />
+      )}
     </div>
   );
 }

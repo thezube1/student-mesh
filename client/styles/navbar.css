@@ -6,7 +6,7 @@
   justify-content: left;
   align-items: center;
   padding-top: 25px;
-  padding-left: 25px;
+  padding-left: 40px;
   cursor: pointer;
 }
 
@@ -15,5 +15,26 @@
   font-family: "Cabin";
   font-weight: 900;
   font-size: 20px;
-  margin-right: 25px;
+  margin-right: 40px;
+}
+
+.navbar-item-focused {
+  margin-right: 40px;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 18px;
+  outline: none;
+  background: none;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  padding: 8px 30px;
+  border-radius: 200px;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar-item-focused:hover {
+  color: white;
+  background-color: black;
 }

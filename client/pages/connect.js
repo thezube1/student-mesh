@@ -37,8 +37,8 @@ function ConnectPage() {
               <div className="text" style={{ marginBottom: 10 }}>
                 Connected with <b>{account}</b>
               </div>
-              <Link href="/account">
-                <button className="button">View Account</button>
+              <Link href="/">
+                <button className="button">Return to home</button>
               </Link>
             </div>
           )}

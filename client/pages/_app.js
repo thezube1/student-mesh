@@ -4,6 +4,7 @@ import "../styles/home.css";
 import "../styles/navbar.css";
 import "../styles/connect.css";
 import "../styles/account.css";
+import "../styles/provider.css";
 
 // Imports
 import store from "../redux/store";

@@ -1,0 +1,12 @@
+{
+  "providers": [
+    {
+      "wallet": "0xACe6AA5fEbF0A4FdC1d9b6246Dfe5E335ccaF6AE",
+      "school": "The Bush School"
+    },
+    {
+      "wallet": "0x1435B432D8BAD92F040d9a023744b7F53E2584C7",
+      "school": "Evergreen"
+    }
+  ]
+}
