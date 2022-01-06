@@ -17,6 +17,7 @@
     "react-modal": "^3.14.4",
     "react-redux": "^7.2.6",
     "redux-persist": "^6.0.0",
+    "wallet-address-validator": "^0.2.4",
     "web3": "^1.6.1",
     "web3.storage": "^3.5.2"
   },

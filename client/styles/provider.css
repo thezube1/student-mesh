@@ -60,6 +60,12 @@ input[type="file"] {
   display: none;
 }
 
+#provider-confirm-wrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
 @media screen and (max-width: 400px) {
   .school-title {
     font-size: 60px;
