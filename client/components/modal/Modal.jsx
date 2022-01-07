@@ -8,6 +8,7 @@ function ModalGroup(props) {
       contentLabel="Example Modal"
       overlayClassName={"modal-overlay"}
       className={"modal"}
+      ariaHideApp={false}
     >
       <button className="modal-close" onClick={props.close}>
         <div className="modal-close-line modal-line-1"></div>

@@ -67,8 +67,32 @@ input[type="file"] {
   align-content: center;
 }
 
+#provider-confirm-title {
+  font-size: 50px;
+}
+
 .provider-confirm-text {
   margin-bottom: 20px;
+}
+
+.provider-confirm-bold {
+  font-weight: 900;
+  font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .provider-confirm-bold {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #provider-confirm-title {
+    font-size: 30px;
+  }
+  #provider-confirm-buttons {
+    display: grid;
+  }
 }
 
 @media screen and (max-width: 400px) {

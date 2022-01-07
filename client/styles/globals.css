@@ -157,6 +157,15 @@ a {
   transform: rotate(-45deg);
 }
 
+@media screen and (max-width: 1500px) {
+  .modal {
+    top: 50px;
+    left: 50px;
+    right: 50px;
+    bottom: 50px;
+  }
+}
+
 @keyframes load8 {
   0% {
     transform: rotate(0deg);

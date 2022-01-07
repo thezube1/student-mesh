@@ -2,6 +2,7 @@ import Navbar from "../../components/navbar/navbar";
 import Modal from "../../components/modal/Modal";
 import { useState } from "react";
 import WAValidator from "wallet-address-validator";
+import axios from "axios";
 
 function CreateExchangePage() {
   const [error, setError] = useState(false);
@@ -10,20 +11,18 @@ function CreateExchangePage() {
   const [recieverWallet, setRecieverWallet] = useState("");
   const [exchangeInfo, setExchangeInfo] = useState("");
   const [open, setOpen] = useState(false);
-  //console.log(selectedFile);
 
   // on submit display modal to confirm
 
   const onSubmit = () => {
     if (
-      selectedFile === "" ||
+      exchangeInfo === "" ||
       recieverWallet === "" ||
       selectedFile === undefined
     ) {
       setError(true);
     } else {
       const valid = WAValidator.validate(recieverWallet, "ETH", "both");
-      console.log(valid);
       if (valid === false) {
         setInvalidWallet(true);
       } else {
@@ -32,28 +31,78 @@ function CreateExchangePage() {
     }
   };
 
+  const onConfirm = () => {
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    const data = {
+      recieverWallet: recieverWallet,
+      exchangeInfo: exchangeInfo,
+    };
+    for (var key in data) {
+      formData.append(key, data[key]);
+    }
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    axios.post("/api/request", formData, config);
+  };
+
   return (
     <div>
       <Navbar />
       <div id="provider-create-wrapper">
         <Modal open={open} close={() => setOpen(false)}>
           <div id="provider-confirm-wrapper">
-            <div className="header" style={{ fontSize: 50 }}>
+            <div className="header" id="provider-confirm-title">
               Confirm exchange
+            </div>
+            <div
+              className="form-error"
+              style={{
+                justifySelf: "center",
+                marginBottom: 20,
+                inlineSize: 360,
+                overflowWrap: "break-word",
+              }}
+            >
+              Once submitted the exchange cannot be modified
             </div>
             <div>
               <div className="text provider-confirm-text">
-                Reciever wallet:{" "}
-                <span style={{ fontSize: 20, fontWeight: 900 }}>
-                  {recieverWallet}
-                </span>
+                <span>Reciever wallet: </span>
+                <span className="provider-confirm-bold">{recieverWallet}</span>
               </div>
               <div className="text provider-confirm-text">
-                Exchange info:{" "}
-                <span style={{ fontSize: 20, fontWeight: 900 }}>
+                <span>Exchange info: </span>
+                <span className="text provider-confirm-bold">
                   {exchangeInfo}
                 </span>
               </div>
+              <div className="text provider-confirm-text">
+                <span>File name: </span>
+                <span className="provider-confirm-bold">
+                  {selectedFile ? selectedFile.name : ""}
+                </span>
+              </div>
+            </div>
+            <div id="provider-confirm-buttons">
+              <button
+                className="button-primary"
+                onClick={onConfirm}
+                style={{ marginRight: 10 }}
+              >
+                Confirm
+              </button>
+              <button
+                className="button"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </Modal>
