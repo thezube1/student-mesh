@@ -38,9 +38,13 @@ function CreateExchangePage() {
       <div id="provider-create-wrapper">
         <Modal open={open} close={() => setOpen(false)}>
           <div id="provider-confirm-wrapper">
-            <div className="title">Confirm exchange</div>
-            <div className="text">Reciever wallet: {recieverWallet}</div>
-            <div className="text">Exchange info: {exchangeInfo}</div>
+            <div className="header" style={{ fontSize: 50 }}>
+              Confirm exchange
+            </div>
+            <div>
+              <div className="text">Reciever wallet: {recieverWallet}</div>
+              <div className="text">Exchange info: {exchangeInfo}</div>
+            </div>
           </div>
         </Modal>
         <div id="provider-create-form">

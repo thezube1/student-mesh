@@ -9,13 +9,11 @@ function ModalGroup(props) {
       overlayClassName={"modal-overlay"}
       className={"modal"}
     >
-      <div>
-        <button className="modal-close" onClick={props.close}>
-          <div className="modal-close-line modal-line-1"></div>
-          <div className="modal-close-line modal-line-2"></div>
-        </button>
-        {props.children}
-      </div>
+      <button className="modal-close" onClick={props.close}>
+        <div className="modal-close-line modal-line-1"></div>
+        <div className="modal-close-line modal-line-2"></div>
+      </button>
+      {props.children}
     </Modal>
   );
 }
