@@ -67,6 +67,10 @@ input[type="file"] {
   align-content: center;
 }
 
+.provider-confirm-text {
+  margin-bottom: 20px;
+}
+
 @media screen and (max-width: 400px) {
   .school-title {
     font-size: 60px;

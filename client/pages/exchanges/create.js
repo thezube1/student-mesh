@@ -42,8 +42,18 @@ function CreateExchangePage() {
               Confirm exchange
             </div>
             <div>
-              <div className="text">Reciever wallet: {recieverWallet}</div>
-              <div className="text">Exchange info: {exchangeInfo}</div>
+              <div className="text provider-confirm-text">
+                Reciever wallet:{" "}
+                <span style={{ fontSize: 20, fontWeight: 900 }}>
+                  {recieverWallet}
+                </span>
+              </div>
+              <div className="text provider-confirm-text">
+                Exchange info:{" "}
+                <span style={{ fontSize: 20, fontWeight: 900 }}>
+                  {exchangeInfo}
+                </span>
+              </div>
             </div>
           </div>
         </Modal>
