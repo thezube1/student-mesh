@@ -149,6 +149,7 @@ function CreateExchangePage() {
               </div>
               <label className="button" id="provider-upload-button">
                 <input
+                  name="transcript"
                   type="file"
                   onChange={(e) => {
                     setSelectedFile(e.target.files[0]);
