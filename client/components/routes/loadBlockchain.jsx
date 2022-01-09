@@ -15,6 +15,7 @@ function LoadBlockchain() {
       const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
       const accounts = await web3.eth.getAccounts();
       if (accounts[0] === undefined) {
+        dispatch(setProvider({ isProvider: false, school: null }));
         dispatch(setAccount(null));
       } else {
         let isProvider = false;
@@ -27,11 +28,6 @@ function LoadBlockchain() {
         });
         dispatch(setProvider({ provider: isProvider, school: school }));
       }
-
-      // check if wallet is a provider
-      /*
-      
-      */
     } else {
       console.log("No metamask detected");
     }
@@ -39,7 +35,7 @@ function LoadBlockchain() {
 
   useEffect(() => {
     loadBlockChainData();
-  });
+  }, []);
   return <></>;
 }
 

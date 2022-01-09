@@ -2,17 +2,14 @@ import { Web3Storage, getFilesFromPath } from "web3.storage";
 import multer from "multer";
 import nextConnect from "next-connect";
 require("dotenv").config();
+import fs from "fs";
 
-const upload = multer
-  .diskStorage({
-    destination(req, file, cb) {
-      cb(null, path.join(__dirname, "public/uploads"));
-    },
-    filename(req, file, cb) {
-      cb(null, `${Date.now()}.${file.mimetype.split("/")[1]}`);
-    },
-  })
-  .single("file");
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: "./public/uploads",
+    filename: (req, file, cb) => cb(null, file.originalname),
+  }),
+});
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
@@ -26,51 +23,32 @@ const apiRoute = nextConnect({
   },
 });
 
-apiRoute.use(upload);
+const uploadMiddleware = upload.single("file");
 
-apiRoute.post((req, res) => {
+apiRoute.use(uploadMiddleware);
+
+apiRoute.post(async (req, res) => {
   const storage = new Web3Storage({ token: process.env.IPFS_KEY });
-  const reciever = req.body.recieverWallet;
-  const info = req.body.exchangeInfo;
-  const files = [];
-  for (const path of args._) {
-    const pathFiles = await getFilesFromPath(path);
-    files.push(...pathFiles);
-  }
-  console.log(files);
-  res.status(200).json({ data: "success" });
+
+  const files = await getFilesFromPath("public/uploads");
+  let selectedFile = [];
+  files.map((item) => {
+    if (item.name.replace("/uploads/", "") === req.file.filename) {
+      selectedFile.push(item);
+    }
+  });
+  const cid = await storage.put(selectedFile);
+  await fs.unlink(`public/uploads/${req.file.filename}`, (err) => {
+    console.log(err);
+    return;
+  });
+  res.status(200).json({ cid: cid });
 });
 
 export default apiRoute;
 
 export const config = {
   api: {
-    bodyParser: false, // Disallow body parsing, consume as stream
+    bodyParser: false,
   },
 };
-
-/*
-export default function handler(req, res) {
-  if (req.method === "POST") {
-    const data = req.body;
-    console.log(data.recieverWallet);
-    //const client = new Web3Storage({ token: API_TOKEN })
-  }
-}
-
-  const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter,
-    limits: {
-      fileSize: 3840 * 2160 * 1000,
-    },
-  });
-  const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, "./uploads");
-    },
-    filename: (req, file, cb) => {
-      cb(null, Date.now() + "-" + file.originalname);
-    },
-  });
-  */

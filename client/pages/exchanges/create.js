@@ -3,6 +3,11 @@ import Modal from "../../components/modal/Modal";
 import { useState } from "react";
 import WAValidator from "wallet-address-validator";
 import axios from "axios";
+import Web3 from "web3";
+import { useSelector } from "react-redux";
+import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../config";
+import Link from "next/link";
+import withProvider from "../../components/routes/withProvider";
 
 function CreateExchangePage() {
   const [error, setError] = useState(false);
@@ -11,6 +16,9 @@ function CreateExchangePage() {
   const [recieverWallet, setRecieverWallet] = useState("");
   const [exchangeInfo, setExchangeInfo] = useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const provider = useSelector((state) => state.account.provider);
 
   // on submit display modal to confirm
 
@@ -31,24 +39,32 @@ function CreateExchangePage() {
     }
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
+    setLoading(true);
+
     const formData = new FormData();
     formData.append("file", selectedFile);
-    const data = {
-      recieverWallet: recieverWallet,
-      exchangeInfo: exchangeInfo,
-    };
-    for (var key in data) {
-      formData.append(key, data[key]);
-    }
     const config = {
       headers: {
         "content-type": "multipart/form-data",
       },
     };
-    axios.post("/api/request", formData, config);
+    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const accounts = await web3.eth.getAccounts();
+    if (accounts[0] && provider.isProvider) {
+      const studentContract = new web3.eth.Contract(
+        STUDENTS_ABI,
+        STUDENTS_ADDRESS
+      );
+      const cid = await axios.post("/api/request", formData, config);
+      await studentContract.methods
+        .request(recieverWallet, exchangeInfo, cid.data.cid)
+        .send({ from: accounts[0] });
+      setOpen(false);
+      setLoading(false);
+      setComplete(true);
+    }
   };
-
   return (
     <div>
       <Navbar />
@@ -91,85 +107,114 @@ function CreateExchangePage() {
               <button
                 className="button-primary"
                 onClick={onConfirm}
-                style={{ marginRight: 10 }}
-              >
-                Confirm
-              </button>
-              <button
-                className="button"
-                onClick={() => {
-                  setOpen(false);
+                style={{
+                  marginRight: 10,
+                  height: 46,
+                  width: 187,
+                  padding: 0,
+                  display: "grid",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
               >
-                Cancel
+                {loading === false ? (
+                  "Confirm"
+                ) : (
+                  <div id="provider-confirm-spinner"></div>
+                )}
               </button>
+              {loading ? (
+                false
+              ) : (
+                <button
+                  className="button"
+                  onClick={() => {
+                    setOpen(false);
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
         </Modal>
         <div id="provider-create-form">
           <div className="title" style={{ fontSize: 40, marginBottom: 0 }}>
-            Create exchange
+            {complete ? "Exchange request completed" : "Create exchange"}
           </div>
-          <div style={{ display: "grid", justifyItems: "center" }}>
-            {error ? (
-              <div className="form-error" style={{ marginTop: 20 }}>
-                All fields required
-              </div>
-            ) : (
-              false
-            )}
-            {invalidWallet ? (
-              <div className="form-error" style={{ marginTop: 20 }}>
-                Invalid wallet address
-              </div>
-            ) : (
-              false
-            )}
-          </div>
-          <div style={{ display: "grid", justifyItems: "center" }}>
-            <div>
-              <input
-                onChange={(e) => setRecieverWallet(e.target.value)}
-                type="text"
-                className="input provider-input"
-                placeholder="Reciever wallet"
-              />
+          {complete ? (
+            <div className="button" style={{ marginTop: 20 }}>
+              <Link href="/">Return home</Link>
             </div>
-            <div>
-              <input
-                onChange={(e) => setExchangeInfo(e.target.value)}
-                type="text"
-                className="input provider-input"
-                placeholder="Exchange description"
-              />
-            </div>
-            <div id="provider-upload-wrapper">
-              <div className="text" style={{ fontSize: 14 }}>
-                Upload File:
+          ) : (
+            false
+          )}
+          {!complete ? (
+            <>
+              <div style={{ display: "grid", justifyItems: "center" }}>
+                {error ? (
+                  <div className="form-error" style={{ marginTop: 20 }}>
+                    All fields required
+                  </div>
+                ) : (
+                  false
+                )}
+                {invalidWallet ? (
+                  <div className="form-error" style={{ marginTop: 20 }}>
+                    Invalid wallet address
+                  </div>
+                ) : (
+                  false
+                )}
               </div>
-              <label className="button" id="provider-upload-button">
-                <input
-                  name="transcript"
-                  type="file"
-                  onChange={(e) => {
-                    setSelectedFile(e.target.files[0]);
-                  }}
-                />
-                {selectedFile === undefined ? "Select" : selectedFile.name}
-              </label>
-            </div>
-          </div>
-          <button
-            onClick={onSubmit}
-            className="button-primary"
-            style={{ marginTop: 20 }}
-          >
-            Submit
-          </button>
+              <div style={{ display: "grid", justifyItems: "center" }}>
+                <div>
+                  <input
+                    onChange={(e) => setRecieverWallet(e.target.value)}
+                    type="text"
+                    className="input provider-input"
+                    placeholder="Reciever wallet"
+                  />
+                </div>
+                <div>
+                  <input
+                    onChange={(e) => setExchangeInfo(e.target.value)}
+                    type="text"
+                    className="input provider-input"
+                    placeholder="Exchange description"
+                  />
+                </div>
+                <div id="provider-upload-wrapper">
+                  <div className="text" style={{ fontSize: 14 }}>
+                    Upload File:
+                  </div>
+                  <label className="button" id="provider-upload-button">
+                    <input
+                      name="transcript"
+                      type="file"
+                      onChange={(e) => {
+                        setSelectedFile(e.target.files[0]);
+                      }}
+                    />
+                    {selectedFile === undefined ? "Select" : selectedFile.name}
+                  </label>
+                </div>
+              </div>
+              <button
+                onClick={onSubmit}
+                className="button-primary"
+                style={{ marginTop: 20 }}
+              >
+                Submit
+              </button>
+            </>
+          ) : (
+            false
+          )}
         </div>
       </div>
     </div>
   );
 }
 
-export default CreateExchangePage;
+export default withProvider(CreateExchangePage);

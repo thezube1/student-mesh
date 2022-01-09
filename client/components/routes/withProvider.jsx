@@ -8,7 +8,7 @@ const withProvider = (WrappedComponent) => {
 
       const provider = useSelector((state) => state.account.provider);
 
-      if (!provider) {
+      if (!provider.isProvider) {
         Router.replace("/");
         return null;
       }

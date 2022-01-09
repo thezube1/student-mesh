@@ -1,4 +1,4 @@
 import Students from "./contracts/Students.json";
 
 export const STUDENTS_ABI = Students.abi;
-export const STUDENTS_ADDRESS = "0x752557277300C6Ac5DF0969BF2ee9eC3b79b9070";
+export const STUDENTS_ADDRESS = "0xa8f53902579DafD8A96F7b44b0529e56F4CB136f";

@@ -8,7 +8,7 @@ import DefaultHome from "../components/home/default/DefaultHome";
 
 function Home() {
   const account = useSelector((state) => state.account.account);
-  const provider = useSelector((state) => state.account.provider);
+  const provider = useSelector((state) => state.account.provider.isProvider);
 
   return (
     <div>

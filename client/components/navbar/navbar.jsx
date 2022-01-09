@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 function Navbar() {
   const address = useSelector((state) => state.account.account);
-  const provider = useSelector((state) => state.account.provider);
+  const provider = useSelector((state) => state.account.provider.isProvider);
 
   const providerNavbar = () => {
     return (
@@ -38,11 +38,17 @@ function Navbar() {
       <Link href="/">
         <div className="navbar-item">Home</div>
       </Link>
+
       {provider && address !== null
         ? providerNavbar()
         : address !== null
         ? accountNavbar()
         : defaultNavbar()}
+      <div style={{ justifySelf: "flex-end" }}>
+        <Link href="/connect">
+          <div className="navbar-item">Connect</div>
+        </Link>
+      </div>
     </div>
   );
 }
