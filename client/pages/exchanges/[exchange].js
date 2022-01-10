@@ -17,15 +17,17 @@ function ExchangePage() {
       STUDENTS_ABI,
       STUDENTS_ADDRESS
     );
-    const data = await studentContract.getPastEvents("RequestApproval", {
-      fromBlock: 0,
-      toBlock: "latest",
+
+    const temp = await studentContract.getPastEvents("RequestApproval", {
       filter: { transactionHash: exchangeAddress },
     });
-    if (setData.length === 0) {
+
+    console.log(exchangeAddress);
+    console.log(temp);
+    if (temp.length === 0) {
       setValid(false);
     } else {
-      setData(data[0]);
+      setData(temp[0]);
       setValid(true);
     }
   }, []);
@@ -34,7 +36,7 @@ function ExchangePage() {
     <div>
       <Navbar />
       {valid ? (
-        <div>{data.returnValues.provider}</div>
+        <div>{data.returnValues.header}</div>
       ) : (
         <div>Invalid exchange</div>
       )}

@@ -44,11 +44,11 @@ function Navbar() {
         : address !== null
         ? accountNavbar()
         : defaultNavbar()}
-      <div style={{ justifySelf: "flex-end" }}>
+      {/* <div style={{ justifySelf: "flex-end" }}>
         <Link href="/connect">
           <div className="navbar-item">Connect</div>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -2,8 +2,8 @@ import Navbar from "../components/navbar/navbar";
 import Link from "next/link";
 import Web3 from "web3";
 import { useSelector, useDispatch } from "react-redux";
-import { setAccount, setWeb3 } from "../redux/reducers/accountReducer";
-import { useEffect } from "react";
+import { setAccount, setProvider } from "../redux/reducers/accountReducer";
+import Providers from "../providers.json";
 
 function ConnectPage() {
   const account = useSelector((state) => state.account.account);
@@ -15,6 +15,15 @@ function ConnectPage() {
       const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
       const accounts = await web3.eth.getAccounts();
       dispatch(setAccount(accounts[0]));
+      let isProvider = false;
+      let school = null;
+      Providers.providers.map((item) => {
+        if (item.wallet === accounts[0]) {
+          isProvider = true;
+          school = item.school;
+        }
+      });
+      dispatch(setProvider({ provider: isProvider, school: school }));
     }
   };
 

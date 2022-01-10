@@ -58,7 +58,7 @@ function CreateExchangePage() {
       );
       const cid = await axios.post("/api/request", formData, config);
       await studentContract.methods
-        .request(recieverWallet, exchangeInfo, cid.data.cid)
+        .request(recieverWallet, cid.data.cid, exchangeInfo)
         .send({ from: accounts[0] });
       setOpen(false);
       setLoading(false);
