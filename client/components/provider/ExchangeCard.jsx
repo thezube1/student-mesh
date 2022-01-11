@@ -2,7 +2,7 @@ import Link from "next/link";
 
 function ExchangeCard(props) {
   return (
-    <Link href={`/exchanges/${props.address}`}>
+    <Link href={`/exchanges/${props.hash}`}>
       <div className="exchange-card-wrapper">
         <div className="exchange-card-content">
           <div className="text provider-exchange-text">

@@ -14,6 +14,7 @@ function ExchangePage() {
       STUDENTS_ABI,
       STUDENTS_ADDRESS
     );
+
     const retrieval = await studentContract.getPastEvents("RequestApproval", {
       fromBlock: 0,
       toBlock: "latest",
@@ -21,7 +22,6 @@ function ExchangePage() {
     });
     setData(retrieval);
   }, []);
-  console.log(data);
   return (
     <div>
       <Navbar />
@@ -41,7 +41,7 @@ function ExchangePage() {
                   provider={returns.provider}
                   reciever={returns.reciever}
                   header={returns.header}
-                  address={item.transactionHash}
+                  hash={item.transactionHash}
                 />
               );
             })}
