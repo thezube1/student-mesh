@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.14",
     "@reduxjs/toolkit": "^1.7.1",
+    "abi-decoder": "^2.4.0",
     "axios": "^0.24.0",
     "dotenv": "^10.0.0",
     "multer": "^1.4.4",
