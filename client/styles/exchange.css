@@ -1,0 +1,34 @@
+#exchange-wrapper {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+}
+
+.exchange-info {
+  margin-top: 20px;
+}
+
+.exchange-values {
+  display: flex;
+  align-items: center;
+}
+
+.exchange-label {
+  font-size: "Cabin";
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: rgb(51, 51, 51);
+}
+
+.exchange-vertical-line {
+  width: 2px;
+  height: 20px;
+  background-color: black;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.exchange-buttons {
+  margin-top: 20px;
+}
