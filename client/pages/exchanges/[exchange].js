@@ -1,14 +1,19 @@
 import Navbar from "../../components/navbar/navbar";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Web3 from "web3";
 import { STUDENTS_ABI } from "../../config";
 import abiDecoder from "abi-decoder";
 import ExchangeInfo from "../../components/exchange/ExchangeInfo";
+import DownloadSVG from "../../components/exchange/DownloadSVG";
+import SearchSVG from "../../components/exchange/SearchSVG";
+import Providers from "../../providers.json";
+import axios from "axios";
 
 function ExchangePage() {
   const router = useRouter();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(undefined);
+  const [schoolName, setSchoolName] = useState(undefined);
   const [valid, setValid] = useState(undefined);
 
   useEffect(async () => {
@@ -20,15 +25,21 @@ function ExchangePage() {
       setValid(false);
     } else {
       const logs = await abiDecoder.decodeLogs(receipt.logs);
-      setData(logs[0].events);
+      const temp = logs[0].events;
+      console.log(temp);
+      setData(temp);
+      Providers.providers.map((item) => {
+        if (item.wallet.toLowerCase() === temp[0].value) {
+          setSchoolName(item.school);
+        }
+      });
       setValid(true);
     }
   }, []);
-  console.log(data);
   return (
     <div>
       <Navbar />
-      {valid ? (
+      {valid && data !== undefined ? (
         <div id="exchange-wrapper">
           <div>
             <div className="title" style={{ fontSize: 60 }}>
@@ -36,7 +47,11 @@ function ExchangePage() {
             </div>
             <div className="line" style={{ maxWidth: 200 }}></div>
             <div>
-              <ExchangeInfo label="Provider" address={data[0].value} />
+              <ExchangeInfo
+                label="Provider"
+                name={schoolName}
+                address={data[0].value}
+              />
             </div>
             <div>
               <ExchangeInfo label="Reciever" address={data[1].value} />
@@ -48,11 +63,47 @@ function ExchangePage() {
                 address={data[2].value}
               />
             </div>
-            <div className="exchange-buttons">
-              <button className="button" style={{ marginRight: 20 }}>
-                View file
+            <div className="exchange-buttons" style={{ display: "flex" }}>
+              <button
+                className="button"
+                style={{
+                  marginRight: 20,
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "10px 60px",
+                }}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    right: 30,
+                    width: 1,
+                    bottom: 1,
+                  }}
+                >
+                  <SearchSVG />
+                </div>
+                <span>View File</span>
               </button>
-              <button className="button-primary">Download</button>
+              <button
+                className="button-primary"
+                style={{ display: "flex", padding: "10px 40px" }}
+                onClick={() => axios.get(`/api/request/${data[2].value}`)}
+              >
+                <div
+                  style={{
+                    position: "relative",
+                    right: 18,
+                    width: 1,
+                    bottom: 2,
+                  }}
+                >
+                  <DownloadSVG />
+                </div>
+                <span style={{ position: "relative", left: 5 }}>
+                  Download File
+                </span>
+              </button>
             </div>
           </div>
         </div>

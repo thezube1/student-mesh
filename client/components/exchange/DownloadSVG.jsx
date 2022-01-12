@@ -6,6 +6,7 @@ function DownloadSVG() {
       viewBox="0 0 10 10"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ transform: "scale(1.8)" }}
     >
       <rect y="9" width="10" height="1" rx="0.5" fill="white" />
       <path

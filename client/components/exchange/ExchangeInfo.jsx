@@ -8,7 +8,7 @@ function ExchangeInfo(props) {
         ) : (
           <>
             {" "}
-            <div className="text-bold">Unknown</div>
+            <div className="text-bold">{props.name || "Unknown"}</div>
             <div className="exchange-vertical-line"></div>
           </>
         )}

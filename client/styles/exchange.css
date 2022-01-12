@@ -17,8 +17,9 @@
 .exchange-label {
   font-size: "Cabin";
   font-size: 18px;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   color: rgb(51, 51, 51);
+  font-weight: 600;
 }
 
 .exchange-vertical-line {
@@ -31,4 +32,9 @@
 
 .exchange-buttons {
   margin-top: 20px;
+}
+
+.button:hover .exchange-button-svg {
+  filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(332deg)
+    brightness(102%) contrast(102%);
 }

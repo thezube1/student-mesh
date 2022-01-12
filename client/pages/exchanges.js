@@ -14,12 +14,12 @@ function ExchangePage() {
       STUDENTS_ABI,
       STUDENTS_ADDRESS
     );
-
     const retrieval = await studentContract.getPastEvents("RequestApproval", {
       fromBlock: 0,
       toBlock: "latest",
       filter: { _from: accounts[0] },
     });
+    console.log(retrieval);
     setData(retrieval);
   }, []);
   return (

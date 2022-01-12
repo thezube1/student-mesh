@@ -6,6 +6,8 @@ function SearchSVG() {
       viewBox="0 0 11 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ transform: "scale(1.8)" }}
+      className="exchange-button-svg"
     >
       <circle
         cx="5.65075"
