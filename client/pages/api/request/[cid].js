@@ -1,4 +1,5 @@
 import nextConnect from "next-connect";
+import { Web3Storage } from "web3.storage";
 require("dotenv").config();
 
 const apiRoute = nextConnect({
@@ -16,6 +17,11 @@ const apiRoute = nextConnect({
 apiRoute.get(async (req, res) => {
   const cid = req.query.cid;
   const storage = new Web3Storage({ token: process.env.IPFS_KEY });
+  const response = await storage.get(cid);
+  const files = await response.files();
+  res.setHeader("Content-Type", "image/jpg");
+  res.send(files);
+  //console.log(response);
 });
 
 export default apiRoute;

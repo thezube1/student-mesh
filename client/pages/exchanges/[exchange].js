@@ -9,12 +9,14 @@ import DownloadSVG from "../../components/exchange/DownloadSVG";
 import SearchSVG from "../../components/exchange/SearchSVG";
 import Providers from "../../providers.json";
 import axios from "axios";
+import fileDownload from "js-file-download";
 
 function ExchangePage() {
   const router = useRouter();
   const [data, setData] = useState(undefined);
   const [schoolName, setSchoolName] = useState(undefined);
   const [valid, setValid] = useState(undefined);
+  const [downloading, setDownloading] = useState(undefined);
 
   useEffect(async () => {
     abiDecoder.addABI(STUDENTS_ABI);
@@ -26,7 +28,6 @@ function ExchangePage() {
     } else {
       const logs = await abiDecoder.decodeLogs(receipt.logs);
       const temp = logs[0].events;
-      console.log(temp);
       setData(temp);
       Providers.providers.map((item) => {
         if (item.wallet.toLowerCase() === temp[0].value) {
@@ -36,6 +37,24 @@ function ExchangePage() {
       setValid(true);
     }
   }, []);
+
+  const handleDownload = (cid) => {
+    setDownloading(true);
+    axios.get(`/api/request/${cid}`).then((data) => {
+      const name = data.data[0]._name;
+      console.log(name);
+
+      axios
+        .get(`https://${cid}.ipfs.dweb.link/${data.data[0]._name}`, {
+          responseType: "blob",
+        })
+        .then((res) => {
+          fileDownload(res.data, name.replace("uploads_", ""));
+          setDownloading(false);
+        });
+    });
+  };
+
   return (
     <div>
       <Navbar />
@@ -63,6 +82,7 @@ function ExchangePage() {
                 address={data[2].value}
               />
             </div>
+
             <div className="exchange-buttons" style={{ display: "flex" }}>
               <button
                 className="button"
@@ -88,21 +108,29 @@ function ExchangePage() {
               <button
                 className="button-primary"
                 style={{ display: "flex", padding: "10px 40px" }}
-                onClick={() => axios.get(`/api/request/${data[2].value}`)}
+                onClick={() => {
+                  handleDownload(data[2].value);
+                }}
               >
-                <div
-                  style={{
-                    position: "relative",
-                    right: 18,
-                    width: 1,
-                    bottom: 2,
-                  }}
-                >
-                  <DownloadSVG />
-                </div>
-                <span style={{ position: "relative", left: 5 }}>
-                  Download File
-                </span>
+                {downloading ? (
+                  <div id="provider-confirm-spinner"></div>
+                ) : (
+                  <>
+                    <div
+                      style={{
+                        position: "relative",
+                        right: 18,
+                        width: 1,
+                        bottom: 2,
+                      }}
+                    >
+                      <DownloadSVG />
+                    </div>
+                    <span style={{ position: "relative", left: 5 }}>
+                      Download File
+                    </span>
+                  </>
+                )}
               </button>
             </div>
           </div>
