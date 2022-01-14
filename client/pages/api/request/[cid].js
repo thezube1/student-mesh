@@ -21,7 +21,6 @@ apiRoute.get(async (req, res) => {
   const files = await response.files();
   res.setHeader("Content-Type", "image/jpg");
   res.send(files);
-  //console.log(response);
 });
 
 export default apiRoute;

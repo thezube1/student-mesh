@@ -27,6 +27,16 @@ function ConnectPage() {
     }
   };
 
+  const disconnect = async () => {
+    if (window.ethereum) {
+      const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+      const accounts = await web3.eth.getAccounts();
+      if (accounts[0]) {
+        await web3.eth.currentProvider.disconnect();
+      }
+    }
+  };
+
   return (
     <div>
       <Navbar />
@@ -49,6 +59,13 @@ function ConnectPage() {
               <Link href="/">
                 <button className="button">Return to home</button>
               </Link>
+              <button
+                onClick={disconnect}
+                className="button"
+                style={{ marginTop: 10 }}
+              >
+                Log out
+              </button>
             </div>
           )}
         </div>
