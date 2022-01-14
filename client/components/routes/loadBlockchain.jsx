@@ -35,7 +35,7 @@ function LoadBlockchain() {
 
   useEffect(() => {
     loadBlockChainData();
-  }, []);
+  });
   return <></>;
 }
 

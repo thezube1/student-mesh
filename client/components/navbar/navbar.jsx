@@ -29,7 +29,7 @@ function Navbar() {
   const defaultNavbar = () => {
     return (
       <Link href="/connect">
-        <div className="navbar-item">Connect</div>
+        <div className="navbar-item">About</div>
       </Link>
     );
   };
@@ -44,9 +44,9 @@ function Navbar() {
         : address !== null
         ? accountNavbar()
         : defaultNavbar()}
-      <div style={{ justifySelf: "flex-end" }}>
+      <div id="navbar-stuff">
         <Link href="/connect">
-          <div className="navbar-item">Connect</div>
+          <div className="navbar-item">{address ? "Settings" : "Account"}</div>
         </Link>
       </div>
     </div>

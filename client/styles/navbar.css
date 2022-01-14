@@ -3,11 +3,9 @@
   top: 0;
   width: 100%;
   display: flex;
-
   align-items: center;
   padding-top: 25px;
   padding-left: 40px;
-  cursor: pointer;
 }
 
 .navbar-item {
@@ -16,6 +14,7 @@
   font-weight: 900;
   font-size: 20px;
   margin-right: 40px;
+  cursor: pointer;
 }
 
 .navbar-item-focused {
@@ -37,4 +36,9 @@
 .navbar-item-focused:hover {
   color: white;
   background-color: black;
+}
+
+#navbar-stuff {
+  position: absolute;
+  right: 10px;
 }
