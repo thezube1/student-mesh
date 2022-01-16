@@ -20,8 +20,8 @@ function Navbar() {
 
   const accountNavbar = () => {
     return (
-      <Link href="/account">
-        <div className="navbar-item">Account</div>
+      <Link href="/exchanges">
+        <div className="navbar-item">Exchanges</div>
       </Link>
     );
   };

@@ -1,22 +1,22 @@
 import Navbar from "../../components/navbar/navbar";
 import { useRouter } from "next/router";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Web3 from "web3";
 import { STUDENTS_ABI } from "../../config";
 import abiDecoder from "abi-decoder";
 import ExchangeInfo from "../../components/exchange/ExchangeInfo";
-import DownloadSVG from "../../components/exchange/DownloadSVG";
-import SearchSVG from "../../components/exchange/SearchSVG";
 import Providers from "../../providers.json";
-import axios from "axios";
-import fileDownload from "js-file-download";
+import withAuth from "../../components/routes/withAuth";
+import DownloadButtons from "../../components/exchange/DownloadButtons";
+import AcceptButtons from "../../components/exchange/AcceptButtons";
+import { useSelector } from "react-redux";
 
 function ExchangePage() {
+  const provider = useSelector((state) => state.account.provider.isProvider);
   const router = useRouter();
   const [data, setData] = useState(undefined);
   const [schoolName, setSchoolName] = useState(undefined);
   const [valid, setValid] = useState(undefined);
-  const [downloading, setDownloading] = useState(undefined);
 
   useEffect(async () => {
     abiDecoder.addABI(STUDENTS_ABI);
@@ -37,23 +37,6 @@ function ExchangePage() {
       setValid(true);
     }
   }, []);
-
-  const handleDownload = (cid) => {
-    setDownloading(true);
-    axios.get(`/api/request/${cid}`).then((data) => {
-      const name = data.data[0]._name;
-      console.log(name);
-
-      axios
-        .get(`https://${cid}.ipfs.dweb.link/${data.data[0]._name}`, {
-          responseType: "blob",
-        })
-        .then((res) => {
-          fileDownload(res.data, name.replace("uploads_", ""));
-          setDownloading(false);
-        });
-    });
-  };
 
   return (
     <div>
@@ -82,57 +65,11 @@ function ExchangePage() {
                 address={data[2].value}
               />
             </div>
-
-            <div className="exchange-buttons" style={{ display: "flex" }}>
-              <button
-                className="button"
-                style={{
-                  marginRight: 20,
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "10px 60px",
-                }}
-              >
-                <div
-                  style={{
-                    position: "relative",
-                    right: 30,
-                    width: 1,
-                    bottom: 1,
-                  }}
-                >
-                  <SearchSVG />
-                </div>
-                <span>View File</span>
-              </button>
-              <button
-                className="button-primary"
-                style={{ display: "flex", padding: "10px 40px" }}
-                onClick={() => {
-                  handleDownload(data[2].value);
-                }}
-              >
-                {downloading ? (
-                  <div id="provider-confirm-spinner"></div>
-                ) : (
-                  <>
-                    <div
-                      style={{
-                        position: "relative",
-                        right: 18,
-                        width: 1,
-                        bottom: 2,
-                      }}
-                    >
-                      <DownloadSVG />
-                    </div>
-                    <span style={{ position: "relative", left: 5 }}>
-                      Download File
-                    </span>
-                  </>
-                )}
-              </button>
-            </div>
+            {provider ? (
+              <DownloadButtons data={data} />
+            ) : (
+              <AcceptButtons data={data} />
+            )}
           </div>
         </div>
       ) : (
@@ -142,7 +79,7 @@ function ExchangePage() {
   );
 }
 
-export default ExchangePage;
+export default withAuth(ExchangePage);
 
 export async function getServerSideProps(context) {
   return {

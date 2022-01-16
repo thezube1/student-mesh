@@ -3,10 +3,12 @@ import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../config";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
 import ExchangeCard from "../components/provider/ExchangeCard";
-import withProvider from "../components/routes/withProvider";
+import { useSelector } from "react-redux";
+import withAuth from "../components/routes/withAuth";
 
 function ExchangePage() {
   const [data, setData] = useState([]);
+  const provider = useSelector((state) => state.account.provider.isProvider);
   useEffect(async () => {
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
@@ -17,9 +19,11 @@ function ExchangePage() {
     const retrieval = await studentContract.getPastEvents("RequestApproval", {
       fromBlock: 0,
       toBlock: "latest",
-      filter: { _from: accounts[0] },
+      filter: {
+        provider: provider ? accounts[0] : false,
+        reciever: provider ? false : accounts[0],
+      },
     });
-    console.log(retrieval);
     setData(retrieval);
   }, []);
   return (
@@ -57,4 +61,4 @@ function ExchangePage() {
   );
 }
 
-export default withProvider(ExchangePage);
+export default withAuth(ExchangePage);
