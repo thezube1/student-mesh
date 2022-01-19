@@ -15,6 +15,7 @@ function ExchangePage() {
   const provider = useSelector((state) => state.account.provider.isProvider);
   const router = useRouter();
   const [data, setData] = useState(undefined);
+  const [dataType, setDataType] = useState(undefined);
   const [schoolName, setSchoolName] = useState(undefined);
   const [valid, setValid] = useState(undefined);
 
@@ -27,6 +28,7 @@ function ExchangePage() {
       setValid(false);
     } else {
       const logs = await abiDecoder.decodeLogs(receipt.logs);
+      setDataType(logs[0].name);
       const temp = logs[0].events;
       setData(temp);
       Providers.providers.map((item) => {
@@ -48,6 +50,13 @@ function ExchangePage() {
               {data[3].value}
             </div>
             <div className="line" style={{ maxWidth: 200 }}></div>
+            {dataType === "RequestApproval" ? (
+              <div className="text form-error" style={{ marginTop: 20 }}>
+                Exchange request
+              </div>
+            ) : (
+              false
+            )}
             <div>
               <ExchangeInfo
                 label="Provider"
@@ -65,10 +74,16 @@ function ExchangePage() {
                 address={data[2].value}
               />
             </div>
-            {provider ? (
-              <DownloadButtons data={data} />
+            {!provider && dataType === "RequestApproval" ? (
+              <AcceptButtons
+                data={data}
+                provider={data[0].value}
+                header={data[3].value}
+                cid={data[2].value}
+                txhash={router.query.exchange}
+              />
             ) : (
-              <AcceptButtons data={data} />
+              <DownloadButtons data={data} />
             )}
           </div>
         </div>

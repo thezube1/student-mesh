@@ -1,12 +1,10 @@
 import { useState } from "react";
-import DownloadSVG from "./DownloadSVG";
-import SearchSVG from "./SearchSVG";
 import Web3 from "web3";
 
 function AcceptButtons(props) {
   const [downloading, setDownloading] = useState(undefined);
 
-  const accept = () => {
+  const accept = async () => {
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
     if (accounts[0]) {
@@ -15,7 +13,12 @@ function AcceptButtons(props) {
         STUDENTS_ADDRESS
       );
       await studentContract.methods
-        .approve(props.provider, props.header, props.cid)
+        .approve(
+          props.provider,
+          props.header,
+          props.cid,
+          web3.utils.asciiToHex(props.txhash)
+        )
         .send({ from: accounts[0] });
     }
   };
