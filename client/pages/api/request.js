@@ -3,6 +3,7 @@ import multer from "multer";
 import nextConnect from "next-connect";
 require("dotenv").config();
 import fs from "fs";
+import { MongoClient } from "mongodb";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -27,9 +28,11 @@ const uploadMiddleware = upload.single("file");
 
 apiRoute.use(uploadMiddleware);
 
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const client = new MongoClient(url);
+
 apiRoute.post(async (req, res) => {
   const storage = new Web3Storage({ token: process.env.IPFS_KEY });
-
   const files = await getFilesFromPath("public/uploads");
   let selectedFile = [];
   files.map((item) => {
@@ -42,6 +45,8 @@ apiRoute.post(async (req, res) => {
     console.log(err);
     return;
   });
+  await client.connect();
+
   res.status(200).json({ cid: cid });
 });
 
