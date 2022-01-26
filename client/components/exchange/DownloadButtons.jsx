@@ -49,7 +49,7 @@ function DownloadButtons(props) {
         className="button-primary"
         style={{ display: "flex", padding: "10px 40px" }}
         onClick={() => {
-          handleDownload(props.data[2].value);
+          handleDownload(props.data[0].location);
         }}
       >
         {downloading ? (

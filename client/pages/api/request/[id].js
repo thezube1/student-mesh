@@ -1,5 +1,6 @@
 import nextConnect from "next-connect";
 import { Web3Storage } from "web3.storage";
+import { MongoClient, ObjectId } from "mongodb";
 require("dotenv").config();
 
 const apiRoute = nextConnect({
@@ -14,13 +15,23 @@ const apiRoute = nextConnect({
   },
 });
 
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const client = new MongoClient(url);
+const dbName = process.env.DB_NAME;
+
 apiRoute.get(async (req, res) => {
-  const cid = req.query.cid;
+  const id = req.query.id;
+  await client.connect();
+  const db = client.db(dbName);
+  const collection = db.collection("requests");
+  const findResult = await collection.find({ _id: ObjectId(id) }).toArray();
+  /*
   const storage = new Web3Storage({ token: process.env.IPFS_KEY });
   const response = await storage.get(cid);
   const files = await response.files();
   res.setHeader("Content-Type", "image/jpg");
-  res.send(files);
+  */
+  res.send(findResult);
 });
 
 export default apiRoute;

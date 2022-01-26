@@ -50,6 +50,10 @@ apiRoute.post(async (req, res) => {
   res.status(200).json({ cid: cid });
 });
 
+apiRoute.get(async (req, res) => {
+  res.status(200).send({ message: "Hello!" });
+});
+
 export default apiRoute;
 
 export const config = {

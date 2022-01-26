@@ -10,6 +10,7 @@ import withAuth from "../../components/routes/withAuth";
 import DownloadButtons from "../../components/exchange/DownloadButtons";
 import AcceptButtons from "../../components/exchange/AcceptButtons";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 function ExchangePage() {
   const provider = useSelector((state) => state.account.provider.isProvider);
@@ -21,18 +22,15 @@ function ExchangePage() {
 
   useEffect(async () => {
     abiDecoder.addABI(STUDENTS_ABI);
-    const hash = await router.query.exchange;
-    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
-    const receipt = await web3.eth.getTransactionReceipt(hash);
-    if (receipt === null) {
+    const id = await router.query.exchange;
+    //const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const request = await axios.get(`/api/request/${id}`);
+    if (request.data.length === 0) {
       setValid(false);
     } else {
-      const logs = await abiDecoder.decodeLogs(receipt.logs);
-      setDataType(logs[0].name);
-      const temp = logs[0].events;
-      setData(temp);
+      setData(request.data);
       Providers.providers.map((item) => {
-        if (item.wallet.toLowerCase() === temp[0].value) {
+        if (item.wallet.toLowerCase() === request.data[0].provider) {
           setSchoolName(item.school);
         }
       });
@@ -47,7 +45,7 @@ function ExchangePage() {
         <div id="exchange-wrapper">
           <div>
             <div className="title" style={{ fontSize: 60 }}>
-              {data[3].value}
+              {data[0].header}
             </div>
             <div className="line" style={{ maxWidth: 200 }}></div>
             {dataType === "RequestApproval" ? (
@@ -61,25 +59,25 @@ function ExchangePage() {
               <ExchangeInfo
                 label="Provider"
                 name={schoolName}
-                address={data[0].value}
+                address={data[0].provider}
               />
             </div>
             <div>
-              <ExchangeInfo label="Reciever" address={data[1].value} />
+              <ExchangeInfo label="Reciever" address={data[0].reciever} />
             </div>
             <div>
               <ExchangeInfo
                 label="File CID"
                 valueOnly
-                address={data[2].value}
+                address={data[0].location}
               />
             </div>
             {!provider && dataType === "RequestApproval" ? (
               <AcceptButtons
                 data={data}
-                provider={data[0].value}
-                header={data[3].value}
-                cid={data[2].value}
+                provider={data[0].provider}
+                header={data[0].header}
+                cid={data[0].location}
                 txhash={router.query.exchange}
               />
             ) : (

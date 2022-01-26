@@ -5,6 +5,7 @@ import Web3 from "web3";
 import ExchangeCard from "../components/provider/ExchangeCard";
 import { useSelector } from "react-redux";
 import withAuth from "../components/routes/withAuth";
+import axios from "axios";
 
 function ExchangePage() {
   const [data, setData] = useState([]);
@@ -12,6 +13,7 @@ function ExchangePage() {
   useEffect(async () => {
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
+    /*
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
       STUDENTS_ADDRESS
@@ -25,7 +27,13 @@ function ExchangePage() {
       },
     });
     setData(retrieval);
+    */
+
+    axios
+      .get(`/api/request/wallet/${accounts[0]}`)
+      .then((res) => setData(res.data));
   }, []);
+
   return (
     <div>
       <Navbar />
@@ -38,14 +46,13 @@ function ExchangePage() {
           </div>
           <div>
             {data.map((item, index) => {
-              const returns = item.returnValues;
               return (
                 <ExchangeCard
                   key={index}
-                  provider={returns.provider}
-                  reciever={returns.reciever}
-                  header={returns.header}
-                  hash={item.transactionHash}
+                  provider={item.provider}
+                  reciever={item.reciever}
+                  header={item.header}
+                  hash={item._id}
                 />
               );
             })}
