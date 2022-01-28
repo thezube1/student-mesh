@@ -48,7 +48,6 @@ apiRoute.post(async (req, res) => {
   });
 
 <<<<<<< HEAD
-  await client.close();
 =======
   const signature = req.body.provider;
   const sig = util.fromRpcSig(`${signature}`);
