@@ -47,6 +47,7 @@ apiRoute.post(async (req, res) => {
   });
   await client.connect();
 
+  await client.close();
   res.status(200).json({ cid: cid });
 });
 
