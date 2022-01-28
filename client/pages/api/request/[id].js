@@ -15,9 +15,9 @@ const apiRoute = nextConnect({
   },
 });
 
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-const client = new MongoClient(url);
 const dbName = process.env.DB_NAME;
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const client = new MongoClient(url);
 
 apiRoute.get(async (req, res) => {
   const id = req.query.id;
