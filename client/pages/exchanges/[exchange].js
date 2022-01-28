@@ -23,7 +23,6 @@ function ExchangePage() {
   useEffect(async () => {
     abiDecoder.addABI(STUDENTS_ABI);
     const id = await router.query.exchange;
-    //const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const request = await axios.get(`/api/request/${id}`);
     if (request.data.length === 0) {
       setValid(false);

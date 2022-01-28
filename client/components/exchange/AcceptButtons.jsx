@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Web3 from "web3";
+import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../config";
 
 function AcceptButtons(props) {
   const [downloading, setDownloading] = useState(undefined);
@@ -32,6 +33,7 @@ function AcceptButtons(props) {
           display: "flex",
           alignItems: "center",
         }}
+        onClick={accept}
       >
         <span>Accept</span>
       </button>
