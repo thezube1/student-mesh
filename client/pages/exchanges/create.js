@@ -51,15 +51,21 @@ function CreateExchangePage() {
     };
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
+    formData.append("reciever", recieverWallet);
+    formData.append("header", exchangeInfo);
     if (accounts[0] && provider.isProvider) {
       const studentContract = new web3.eth.Contract(
         STUDENTS_ABI,
         STUDENTS_ADDRESS
       );
+      let sign = await web3.eth.personal.sign("test", accounts[0]);
+      formData.append("provider", sign);
       const cid = await axios.post("/api/request", formData, config);
+      /*
       await studentContract.methods
         .request(recieverWallet, cid.data.cid, exchangeInfo)
         .send({ from: accounts[0] });
+        */
       setOpen(false);
       setLoading(false);
       setComplete(true);

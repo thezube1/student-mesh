@@ -4,6 +4,7 @@ import nextConnect from "next-connect";
 require("dotenv").config();
 import fs from "fs";
 import { MongoClient } from "mongodb";
+import * as util from "ethereumjs-util";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -45,8 +46,17 @@ apiRoute.post(async (req, res) => {
     console.log(err);
     return;
   });
-  await client.connect();
 
+  const signature = req.body.provider;
+  const sig = util.fromRpcSig(`${signature}`);
+  const publicKey = util.ecrecover("test", sig.v, sig.r, sig.s);
+  const address = util.pubToAddress(publicKey).toString("hex");
+  console.log(address);
+
+  //await client.connect();
+  //const db = client.db(dbName);
+  //const collection = db.collection("requests");
+  //const resVal = await collection.insertOne({});
   res.status(200).json({ cid: cid });
 });
 
