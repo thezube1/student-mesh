@@ -43,23 +43,23 @@ apiRoute.post(async (req, res) => {
   });
   const cid = await storage.put(selectedFile);
   await fs.unlink(`public/uploads/${req.file.filename}`, (err) => {
-    console.log(err);
+    if (err) return console.log(err);
     return;
   });
 
-<<<<<<< HEAD
-=======
+  //console.log(hash);
   const signature = req.body.provider;
-  const sig = util.fromRpcSig(`${signature}`);
-  const publicKey = util.ecrecover("test", sig.v, sig.r, sig.s);
-  const address = util.pubToAddress(publicKey).toString("hex");
-  console.log(address);
+  const nonce = util.keccak(Buffer.from("test", "utf-8"));
+  const { v, r, s } = util.fromRpcSig(signature);
+  const pubKey = util.ecrecover(util.toBuffer(nonce), v, r, s);
+  const addrBuf = util.pubToAddress(pubKey);
+  const addr = util.bufferToHex(addrBuf);
+  console.log(addr);
 
   //await client.connect();
   //const db = client.db(dbName);
   //const collection = db.collection("requests");
   //const resVal = await collection.insertOne({});
->>>>>>> 21e0ebe6d9d49f237df7b3883f09b88b48784f66
   res.status(200).json({ cid: cid });
 });
 

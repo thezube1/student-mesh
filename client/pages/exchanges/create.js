@@ -58,17 +58,20 @@ function CreateExchangePage() {
         STUDENTS_ABI,
         STUDENTS_ADDRESS
       );
-      let sign = await web3.eth.personal.sign("test", accounts[0]);
+      let sign = await web3.eth.personal.sign(
+        web3.utils.sha3(accounts[0]),
+        accounts[0]
+      );
       formData.append("provider", sign);
-      const cid = await axios.post("/api/request", formData, config);
+      await axios.post("/api/request", formData, config);
       /*
       await studentContract.methods
         .request(recieverWallet, cid.data.cid, exchangeInfo)
         .send({ from: accounts[0] });
         */
-      setOpen(false);
-      setLoading(false);
-      setComplete(true);
+      //setOpen(false);
+      //setLoading(false);
+      //setComplete(true);
     }
   };
   return (
