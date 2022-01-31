@@ -54,10 +54,6 @@ function CreateExchangePage() {
     formData.append("reciever", recieverWallet);
     formData.append("header", exchangeInfo);
     if (accounts[0] && provider.isProvider) {
-      const studentContract = new web3.eth.Contract(
-        STUDENTS_ABI,
-        STUDENTS_ADDRESS
-      );
       let sign = await web3.eth.personal.sign(
         web3.utils.sha3("test"),
         accounts[0]

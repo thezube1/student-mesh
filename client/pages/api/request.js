@@ -52,30 +52,28 @@ apiRoute.post(async (req, res) => {
 
   const signature = req.body.signature;
   const provider = req.body.provider;
+  const reciever = req.body.reciever;
+  const header = req.body.header;
   let recoveredAddress = web3.eth.accounts.recover(
     web3.utils.sha3("test"),
     signature
   );
-  console.log(recoveredAddress, provider);
   if (recoveredAddress.normalize() === provider.normalize()) {
+    await client.connect();
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection("requests");
+    const resVal = await collection.insertOne({
+      provider: provider,
+      reciever: reciever,
+      cid: cid,
+      header: header,
+    });
+    console.log(resVal);
     console.log(true);
   } else {
-    console.log(false);
+    res.status(403).send(false);
   }
-  /*
-  let nonce = "test";
-  nonce = util.keccak(Buffer.from(nonce, "utf-8"));
-  const { v, r, s } = util.fromRpcSig(signature);
-  const pubKey = util.ecrecover(nonce, v, r, s);
-  const addrBuf = util.pubToAddress(pubKey);
-  const addr = util.bufferToHex(addrBuf);
-  console.log(addr);
-  */
 
-  //await client.connect();
-  //const db = client.db(dbName);
-  //const collection = db.collection("requests");
-  //const resVal = await collection.insertOne({});
   res.status(200).json({ cid: cid });
 });
 
