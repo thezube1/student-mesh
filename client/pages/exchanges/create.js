@@ -59,10 +59,11 @@ function CreateExchangePage() {
         STUDENTS_ADDRESS
       );
       let sign = await web3.eth.personal.sign(
-        web3.utils.sha3(accounts[0]),
+        web3.utils.sha3("test"),
         accounts[0]
       );
-      formData.append("provider", sign);
+      formData.append("signature", sign);
+      formData.append("provider", accounts[0]);
       await axios.post("/api/request", formData, config);
       /*
       await studentContract.methods

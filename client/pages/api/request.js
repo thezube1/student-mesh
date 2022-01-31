@@ -5,6 +5,7 @@ require("dotenv").config();
 import fs from "fs";
 import { MongoClient } from "mongodb";
 import * as util from "ethereumjs-util";
+import Web3 from "web3";
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -29,7 +30,9 @@ const uploadMiddleware = upload.single("file");
 
 apiRoute.use(uploadMiddleware);
 
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+let web3 = new Web3(new Web3.providers.HttpProvider("https://****/"));
+
+const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@studentmesh.uyka3.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const client = new MongoClient(url);
 
 apiRoute.post(async (req, res) => {
@@ -47,14 +50,27 @@ apiRoute.post(async (req, res) => {
     return;
   });
 
-  //console.log(hash);
-  const signature = req.body.provider;
-  const nonce = util.keccak(Buffer.from("test", "utf-8"));
+  const signature = req.body.signature;
+  const provider = req.body.provider;
+  let recoveredAddress = web3.eth.accounts.recover(
+    web3.utils.sha3("test"),
+    signature
+  );
+  console.log(recoveredAddress, provider);
+  if (recoveredAddress.normalize() === provider.normalize()) {
+    console.log(true);
+  } else {
+    console.log(false);
+  }
+  /*
+  let nonce = "test";
+  nonce = util.keccak(Buffer.from(nonce, "utf-8"));
   const { v, r, s } = util.fromRpcSig(signature);
-  const pubKey = util.ecrecover(util.toBuffer(nonce), v, r, s);
+  const pubKey = util.ecrecover(nonce, v, r, s);
   const addrBuf = util.pubToAddress(pubKey);
   const addr = util.bufferToHex(addrBuf);
   console.log(addr);
+  */
 
   //await client.connect();
   //const db = client.db(dbName);
