@@ -25,9 +25,13 @@ apiRoute.get(async (req, res) => {
   await client.connect();
   const db = client.db(dbName);
   const collection = db.collection("requests");
+
   const findResult = await collection
-    .find({ reciever: wallet.toLowerCase() })
+    .find({
+      provider: { $in: [wallet.toUpperCase(), wallet.toLowerCase()] },
+    })
     .toArray();
+  await client.close();
   res.status(200).send(findResult);
 });
 

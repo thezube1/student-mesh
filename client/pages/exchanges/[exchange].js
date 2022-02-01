@@ -65,18 +65,14 @@ function ExchangePage() {
               <ExchangeInfo label="Reciever" address={data[0].reciever} />
             </div>
             <div>
-              <ExchangeInfo
-                label="File CID"
-                valueOnly
-                address={data[0].location}
-              />
+              <ExchangeInfo label="File CID" valueOnly address={data[0].cid} />
             </div>
             {!provider && dataType === "RequestApproval" ? (
               <AcceptButtons
                 data={data}
                 provider={data[0].provider}
                 header={data[0].header}
-                cid={data[0].location}
+                cid={data[0].cid}
                 txhash={router.query.exchange}
               />
             ) : (

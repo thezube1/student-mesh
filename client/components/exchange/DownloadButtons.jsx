@@ -7,20 +7,15 @@ import fileDownload from "js-file-download";
 function DownloadButtons(props) {
   const [downloading, setDownloading] = useState(undefined);
 
-  const handleDownload = (cid) => {
+  const handleDownload = async (cid) => {
     setDownloading(true);
-    axios.get(`/api/request/${cid}`).then((res1) => {
-      const name = res1.data[0]._name;
-
-      axios
-        .get(`https://${cid}.ipfs.dweb.link/${res1.data[0]._name}`, {
-          responseType: "blob",
-        })
-        .then((res2) => {
-          fileDownload(res2.data, name.replace("uploads_", ""));
-          setDownloading(false);
-        });
+    const name_res = await axios.get(`/api/request/file/${cid}`);
+    const name = String(name_res.data.name);
+    const file = await axios.get(`https://${cid}.ipfs.dweb.link/${name}`, {
+      responseType: "blob",
     });
+    fileDownload(file.data, name.replace("uploads_", ""));
+    setDownloading(false);
   };
   return (
     <div className="exchange-buttons" style={{ display: "flex" }}>
@@ -49,7 +44,7 @@ function DownloadButtons(props) {
         className="button-primary"
         style={{ display: "flex", padding: "10px 40px" }}
         onClick={() => {
-          handleDownload(props.data[0].location);
+          handleDownload(props.data[0].cid);
         }}
       >
         {downloading ? (

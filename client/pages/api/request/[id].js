@@ -26,12 +26,7 @@ apiRoute.get(async (req, res) => {
   const collection = db.collection("requests");
   const findResult = await collection.find({ _id: ObjectId(id) }).toArray();
   await client.close();
-  /*
-  const storage = new Web3Storage({ token: process.env.IPFS_KEY });
-  const response = await storage.get(cid);
-  const files = await response.files();
-  res.setHeader("Content-Type", "image/jpg");
-  */
+
   res.send(findResult);
 });
 

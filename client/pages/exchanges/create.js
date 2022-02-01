@@ -61,14 +61,10 @@ function CreateExchangePage() {
       formData.append("signature", sign);
       formData.append("provider", accounts[0]);
       await axios.post("/api/request", formData, config);
-      /*
-      await studentContract.methods
-        .request(recieverWallet, cid.data.cid, exchangeInfo)
-        .send({ from: accounts[0] });
-        */
-      //setOpen(false);
-      //setLoading(false);
-      //setComplete(true);
+
+      setOpen(false);
+      setLoading(false);
+      setComplete(true);
     }
   };
   return (

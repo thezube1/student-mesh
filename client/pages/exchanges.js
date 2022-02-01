@@ -13,6 +13,7 @@ function ExchangePage() {
   useEffect(async () => {
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
+
     /*
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,

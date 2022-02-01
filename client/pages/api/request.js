@@ -41,10 +41,13 @@ apiRoute.post(async (req, res) => {
   let selectedFile = [];
   files.map((item) => {
     if (item.name.replace("/uploads/", "") === req.file.filename) {
-      selectedFile.push(item);
+      const copy = item;
+      copy.name = copy.name.replace("/uploads/", "");
+      selectedFile.push(copy);
     }
   });
-  const cid = await storage.put(selectedFile);
+
+  const cid = await storage.put(selectedFile, { wrapWithDirectory: true });
   await fs.unlink(`public/uploads/${req.file.filename}`, (err) => {
     if (err) return console.log(err);
     return;
@@ -62,19 +65,20 @@ apiRoute.post(async (req, res) => {
     await client.connect();
     const db = client.db(process.env.DB_NAME);
     const collection = db.collection("requests");
-    const resVal = await collection.insertOne({
-      provider: provider,
-      reciever: reciever,
-      cid: cid,
-      header: header,
-    });
-    console.log(resVal);
-    console.log(true);
+    try {
+      await collection.insertOne({
+        provider: provider.toLowerCase(),
+        reciever: reciever.toLowerCase(),
+        cid: cid.toLowerCase(),
+        header: header,
+      });
+      res.status(200).send(true);
+    } catch {
+      res.statusCode(500).send(false);
+    }
   } else {
     res.status(403).send(false);
   }
-
-  res.status(200).json({ cid: cid });
 });
 
 apiRoute.get(async (req, res) => {
