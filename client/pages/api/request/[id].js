@@ -30,4 +30,19 @@ apiRoute.get(async (req, res) => {
   res.send(findResult);
 });
 
+apiRoute.delete(async (req, res) => {
+  const id = req.query.id;
+  await client.connect();
+  const db = client.db(dbName);
+  const collection = db.collection("requests");
+  try {
+    await collection.deleteOne({ _id: id });
+    res.status(200).send(true);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(false);
+  }
+  await client.close();
+});
+
 export default apiRoute;

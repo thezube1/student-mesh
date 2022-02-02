@@ -76,7 +76,7 @@ function ExchangePage() {
                 provider={data[0].provider}
                 header={data[0].header}
                 cid={data[0].cid}
-                txhash={router.query.exchange}
+                id={router.query.id}
               />
             ) : (
               <DownloadButtons data={data} />
