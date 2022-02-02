@@ -15,7 +15,7 @@ import {
 import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  timeout: 1000,
+  timeout: 500,
   key: "root",
   version: 1,
   storage,

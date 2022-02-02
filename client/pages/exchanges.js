@@ -6,14 +6,19 @@ import ExchangeCard from "../components/provider/ExchangeCard";
 import { useSelector } from "react-redux";
 import withAuth from "../components/routes/withAuth";
 import axios from "axios";
+import LoadingWheel from "../components/loading/LoadingWheel";
 
 function ExchangePage() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const provider = useSelector((state) => state.account.provider.isProvider);
   useEffect(async () => {
+    setLoading(true);
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
-
+    const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
+    setData(res.data);
+    setLoading(false);
     /*
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
@@ -29,42 +34,42 @@ function ExchangePage() {
     });
     setData(retrieval);
     */
-
-    axios
-      .get(`/api/request/wallet/${accounts[0]}`)
-      .then((res) => setData(res.data));
   }, []);
 
   return (
     <div>
       <Navbar />
-      <div id="provider-exchanges-wrapper">
-        <div className="provider-exchanges-section">
-          <div>
-            <div className="title pending-exchanges-title">
-              Pending Exchanges
+      {loading ? (
+        <LoadingWheel />
+      ) : (
+        <div id="provider-exchanges-wrapper">
+          <div className="provider-exchanges-section">
+            <div>
+              <div className="title pending-exchanges-title">
+                Pending Exchanges
+              </div>
+            </div>
+            <div>
+              {data.map((item, index) => {
+                return (
+                  <ExchangeCard
+                    key={index}
+                    provider={item.provider}
+                    reciever={item.reciever}
+                    header={item.header}
+                    hash={item._id}
+                  />
+                );
+              })}
             </div>
           </div>
-          <div>
-            {data.map((item, index) => {
-              return (
-                <ExchangeCard
-                  key={index}
-                  provider={item.provider}
-                  reciever={item.reciever}
-                  header={item.header}
-                  hash={item._id}
-                />
-              );
-            })}
+          <div className="provider-exchanges-section">
+            <div className="title pending-exchanges-title">
+              Completed Exchanges
+            </div>
           </div>
         </div>
-        <div className="provider-exchanges-section">
-          <div className="title pending-exchanges-title">
-            Completed Exchanges
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

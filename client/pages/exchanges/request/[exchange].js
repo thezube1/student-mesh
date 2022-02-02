@@ -1,16 +1,17 @@
-import Navbar from "../../components/navbar/navbar";
+import Navbar from "../../../components/navbar/navbar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Web3 from "web3";
-import { STUDENTS_ABI } from "../../config";
+import { STUDENTS_ABI } from "../../../config";
 import abiDecoder from "abi-decoder";
-import ExchangeInfo from "../../components/exchange/ExchangeInfo";
-import Providers from "../../providers.json";
-import withAuth from "../../components/routes/withAuth";
-import DownloadButtons from "../../components/exchange/DownloadButtons";
-import AcceptButtons from "../../components/exchange/AcceptButtons";
+import ExchangeInfo from "../../../components/exchange/ExchangeInfo";
+import Providers from "../../../providers.json";
+import withAuth from "../../../components/routes/withAuth";
+import DownloadButtons from "../../../components/exchange/DownloadButtons";
+import AcceptButtons from "../../../components/exchange/AcceptButtons";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import LoadingWheel from "../../../components/loading/LoadingWheel";
 
 function ExchangePage() {
   const provider = useSelector((state) => state.account.provider.isProvider);
@@ -25,6 +26,7 @@ function ExchangePage() {
     const id = await router.query.exchange;
     const request = await axios.get(`/api/request/${id}`);
     if (request.data.length === 0) {
+      setData(false);
       setValid(false);
     } else {
       setData(request.data);
@@ -40,20 +42,21 @@ function ExchangePage() {
   return (
     <div>
       <Navbar />
-      {valid && data !== undefined ? (
+      {valid === undefined && data === undefined ? (
+        <LoadingWheel />
+      ) : valid === false || data === false ? (
+        <div>Invalid exchange</div>
+      ) : (
         <div id="exchange-wrapper">
           <div>
             <div className="title" style={{ fontSize: 60 }}>
               {data[0].header}
             </div>
             <div className="line" style={{ maxWidth: 200 }}></div>
-            {dataType === "RequestApproval" ? (
-              <div className="text form-error" style={{ marginTop: 20 }}>
-                Exchange request
-              </div>
-            ) : (
-              false
-            )}
+
+            <div className="text form-error" style={{ marginTop: 20 }}>
+              Exchange request
+            </div>
             <div>
               <ExchangeInfo
                 label="Provider"
@@ -67,7 +70,7 @@ function ExchangePage() {
             <div>
               <ExchangeInfo label="File CID" valueOnly address={data[0].cid} />
             </div>
-            {!provider && dataType === "RequestApproval" ? (
+            {!provider ? (
               <AcceptButtons
                 data={data}
                 provider={data[0].provider}
@@ -80,8 +83,6 @@ function ExchangePage() {
             )}
           </div>
         </div>
-      ) : (
-        <div>Invalid exchange</div>
       )}
     </div>
   );

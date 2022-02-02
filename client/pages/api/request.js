@@ -4,7 +4,6 @@ import nextConnect from "next-connect";
 require("dotenv").config();
 import fs from "fs";
 import { MongoClient } from "mongodb";
-import * as util from "ethereumjs-util";
 import Web3 from "web3";
 
 const upload = multer({

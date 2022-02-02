@@ -28,7 +28,10 @@ apiRoute.get(async (req, res) => {
 
   const findResult = await collection
     .find({
-      provider: { $in: [wallet.toUpperCase(), wallet.toLowerCase()] },
+      $or: [
+        { provider: { $in: [wallet.toUpperCase(), wallet.toLowerCase()] } },
+        { reciever: { $in: [wallet.toUpperCase(), wallet.toLowerCase()] } },
+      ],
     })
     .toArray();
   await client.close();
