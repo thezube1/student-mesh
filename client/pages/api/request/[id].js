@@ -26,7 +26,6 @@ apiRoute.get(async (req, res) => {
   const collection = db.collection("requests");
   const findResult = await collection.find({ _id: ObjectId(id) }).toArray();
   await client.close();
-
   res.send(findResult);
 });
 
@@ -36,7 +35,8 @@ apiRoute.delete(async (req, res) => {
   const db = client.db(dbName);
   const collection = db.collection("requests");
   try {
-    await collection.deleteOne({ _id: id });
+    const response = await collection.deleteOne({ _id: ObjectId(id) });
+    console.log(response);
     res.status(200).send(true);
   } catch (error) {
     console.log(error);

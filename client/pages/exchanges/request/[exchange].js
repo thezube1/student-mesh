@@ -20,11 +20,13 @@ function ExchangePage() {
   const [dataType, setDataType] = useState(undefined);
   const [schoolName, setSchoolName] = useState(undefined);
   const [valid, setValid] = useState(undefined);
+  const [id, setId] = useState(undefined);
 
   useEffect(async () => {
     abiDecoder.addABI(STUDENTS_ABI);
-    const id = await router.query.exchange;
-    const request = await axios.get(`/api/request/${id}`);
+    const tempId = await router.query.exchange;
+    setId(tempId);
+    const request = await axios.get(`/api/request/${tempId}`);
     if (request.data.length === 0) {
       setData(false);
       setValid(false);
@@ -76,7 +78,7 @@ function ExchangePage() {
                 provider={data[0].provider}
                 header={data[0].header}
                 cid={data[0].cid}
-                id={router.query.id}
+                id={id}
               />
             ) : (
               <DownloadButtons data={data} />

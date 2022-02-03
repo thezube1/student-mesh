@@ -9,7 +9,8 @@ import axios from "axios";
 import LoadingWheel from "../components/loading/LoadingWheel";
 
 function ExchangePage() {
-  const [data, setData] = useState([]);
+  const [requestData, setRequestData] = useState([]);
+  const [approvedData, setApprovedData] = useState([]);
   const [loading, setLoading] = useState(false);
   const provider = useSelector((state) => state.account.provider.isProvider);
   useEffect(async () => {
@@ -17,14 +18,14 @@ function ExchangePage() {
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
-    setData(res.data);
+    setRequestData(res.data);
     setLoading(false);
-    /*
+
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
       STUDENTS_ADDRESS
     );
-    const retrieval = await studentContract.getPastEvents("RequestApproval", {
+    const retrieval = await studentContract.getPastEvents("Transcript", {
       fromBlock: 0,
       toBlock: "latest",
       filter: {
@@ -32,8 +33,8 @@ function ExchangePage() {
         reciever: provider ? false : accounts[0],
       },
     });
-    setData(retrieval);
-    */
+    setApprovedData(retrieval);
+    console.log(retrieval);
   }, []);
 
   return (
@@ -50,7 +51,7 @@ function ExchangePage() {
               </div>
             </div>
             <div>
-              {data.map((item, index) => {
+              {requestData.map((item, index) => {
                 return (
                   <ExchangeCard
                     key={index}
