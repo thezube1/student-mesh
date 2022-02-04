@@ -2,11 +2,15 @@ import axios from "axios";
 import { useState } from "react";
 import Web3 from "web3";
 import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../config";
+import { useRouter } from "next/router";
 
 function AcceptButtons(props) {
-  const [downloading, setDownloading] = useState(undefined);
-
+  const [acceptLoading, setAcceptLoading] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const Router = useRouter();
   const accept = async () => {
+    setAcceptLoading(true);
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
     if (accounts[0]) {
@@ -14,19 +18,28 @@ function AcceptButtons(props) {
         STUDENTS_ABI,
         STUDENTS_ADDRESS
       );
-      await studentContract.methods
+      const response = await studentContract.methods
         .approveTranscript(props.provider, props.header, props.cid)
         .send({ from: accounts[0] });
-      axios.delete(`/api/request/${props.id}`);
+      await axios.delete(`/api/request/${props.id}`);
+      Router.replace(`/exchanges/approved/${response.transactionHash}`);
+      return null;
     }
+    setAcceptLoading(false);
+    setComplete(true);
   };
 
   const decline = async () => {
+    setRejectLoading(true);
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
     if (accounts[0]) {
       axios.delete(`/api/request/${props.id}`);
     }
+    setRejectLoading(false);
+    setComplete(true);
+    Router.replace("/exchanges");
+    return null;
   };
 
   return (
@@ -40,14 +53,20 @@ function AcceptButtons(props) {
         }}
         onClick={accept}
       >
-        <span>Accept</span>
+        {acceptLoading ? (
+          <div id="provider-confirm-spinner"></div>
+        ) : (
+          <>
+            <span>Accept</span>
+          </>
+        )}
       </button>
       <button
         className="button-primary"
         style={{ display: "flex" }}
         onClick={decline}
       >
-        {downloading ? (
+        {rejectLoading ? (
           <div id="provider-confirm-spinner"></div>
         ) : (
           <>

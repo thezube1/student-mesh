@@ -14,29 +14,33 @@ import axios from "axios";
 import LoadingWheel from "../../../components/loading/LoadingWheel";
 
 function ExchangePage() {
-  const provider = useSelector((state) => state.account.provider.isProvider);
-  const router = useRouter();
-  const [data, setData] = useState(undefined);
-  const [schoolName, setSchoolName] = useState(undefined);
+  const [loading, setLoading] = useState(false);
   const [valid, setValid] = useState(undefined);
-  const [id, setId] = useState(undefined);
+  const [data, setData] = useState(undefined);
+  const [schoolName, setSchoolName] = useState("");
+  const router = useRouter();
+  const provider = useSelector((state) => state.account.provider.isProvider);
 
   useEffect(async () => {
+    setLoading(true);
+
     abiDecoder.addABI(STUDENTS_ABI);
-    const tempId = await router.query.exchange;
-    setId(tempId);
-    const request = await axios.get(`/api/request/${tempId}`);
-    if (request.data.length === 0) {
-      setData(false);
+    const hash = await router.query.exchange;
+    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const receipt = await web3.eth.getTransactionReceipt(hash);
+    if (receipt === null) {
       setValid(false);
     } else {
-      setData(request.data);
+      const logs = await abiDecoder.decodeLogs(receipt.logs);
+      const temp = logs[0].events;
+      setData(temp);
       Providers.providers.map((item) => {
-        if (item.wallet.toLowerCase() === request.data[0].provider) {
+        if (item.wallet.toLowerCase() === temp[1].value) {
           setSchoolName(item.school);
         }
       });
       setValid(true);
+      setLoading(false);
     }
   }, []);
   return (
@@ -50,37 +54,29 @@ function ExchangePage() {
         <div id="exchange-wrapper">
           <div>
             <div className="title" style={{ fontSize: 60 }}>
-              {data[0].header}
+              {data[2].value}
             </div>
             <div className="line" style={{ maxWidth: 200 }}></div>
 
-            <div className="text form-error" style={{ marginTop: 20 }}>
-              Exchange request
-            </div>
             <div>
               <ExchangeInfo
                 label="Provider"
                 name={schoolName}
-                address={data[0].provider}
+                address={data[1].value}
               />
             </div>
             <div>
-              <ExchangeInfo label="Reciever" address={data[0].reciever} />
+              <ExchangeInfo label="Reciever" address={data[0].value} />
             </div>
             <div>
-              <ExchangeInfo label="File CID" valueOnly address={data[0].cid} />
-            </div>
-            {!provider ? (
-              <AcceptButtons
-                data={data}
-                provider={data[0].provider}
-                header={data[0].header}
-                cid={data[0].cid}
-                id={id}
+              <ExchangeInfo
+                label="File CID"
+                valueOnly
+                address={data[3].value}
               />
-            ) : (
-              <DownloadButtons cid={data[0].cid} />
-            )}
+            </div>
+
+            <DownloadButtons cid={data[3].value} />
           </div>
         </div>
       )}

@@ -2,7 +2,13 @@ import Link from "next/link";
 
 function ExchangeCard(props) {
   return (
-    <Link href={`/exchanges/request/${props.hash}`}>
+    <Link
+      href={
+        props.request
+          ? `/exchanges/request/${props.hash}`
+          : `/exchanges/approved/${props.hash}`
+      }
+    >
       <div className="exchange-card-wrapper">
         <div className="exchange-card-content">
           <div className="text provider-exchange-text">

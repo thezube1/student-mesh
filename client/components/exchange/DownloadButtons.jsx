@@ -21,7 +21,7 @@ function DownloadButtons(props) {
   };
 
   useEffect(async () => {
-    const cid = props.data[0].cid;
+    const cid = props.cid;
     const name_res = await axios.get(`/api/request/file/${cid}`);
     const name = String(name_res.data.name);
     setFileLink(`https://${cid}.ipfs.dweb.link/${name}`);
@@ -62,7 +62,7 @@ function DownloadButtons(props) {
           className="button-primary"
           style={{ display: "flex", padding: "10px 40px" }}
           onClick={() => {
-            handleDownload(props.data[0].cid);
+            handleDownload(props.cid);
           }}
         >
           {downloading ? (

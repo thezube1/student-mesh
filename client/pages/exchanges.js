@@ -36,7 +36,7 @@ function ExchangePage() {
     setApprovedData(retrieval);
     console.log(retrieval);
   }, []);
-
+  console.log(approvedData);
   return (
     <div>
       <Navbar />
@@ -59,6 +59,7 @@ function ExchangePage() {
                     reciever={item.reciever}
                     header={item.header}
                     hash={item._id}
+                    request
                   />
                 );
               })}
@@ -68,6 +69,18 @@ function ExchangePage() {
             <div className="title pending-exchanges-title">
               Completed Exchanges
             </div>
+            {approvedData.map((item, index) => {
+              const temp = item.returnValues;
+              return (
+                <ExchangeCard
+                  key={index}
+                  provider={temp.provider.toLowerCase()}
+                  reciever={temp.owner.toLowerCase()}
+                  header={temp.header}
+                  hash={item.transactionHash}
+                />
+              );
+            })}
           </div>
         </div>
       )}
