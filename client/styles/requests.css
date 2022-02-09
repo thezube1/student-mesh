@@ -1,0 +1,5 @@
+.request-exchanges-wrapper {
+  display: flex;
+  padding: 75px;
+  gap: 20px;
+}

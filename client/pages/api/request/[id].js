@@ -25,7 +25,6 @@ apiRoute.get(async (req, res) => {
   const db = client.db(dbName);
   const collection = db.collection("requests");
   const findResult = await collection.find({ _id: ObjectId(id) }).toArray();
-  await client.close();
   res.send(findResult);
 });
 
@@ -42,7 +41,6 @@ apiRoute.delete(async (req, res) => {
     console.log(error);
     res.status(400).send(false);
   }
-  await client.close();
 });
 
 export default apiRoute;

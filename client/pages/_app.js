@@ -6,6 +6,8 @@ import "../styles/connect.css";
 import "../styles/account.css";
 import "../styles/provider.css";
 import "../styles/exchange.css";
+import "../styles/approved.css";
+import "../styles/requests.css";
 
 // Imports
 import store from "../redux/store";

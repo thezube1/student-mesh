@@ -7,19 +7,18 @@ import { useSelector } from "react-redux";
 import withAuth from "../components/routes/withAuth";
 import axios from "axios";
 import LoadingWheel from "../components/loading/LoadingWheel";
+import Link from "next/link";
 
 function ExchangePage() {
-  const [requestData, setRequestData] = useState([]);
-  const [approvedData, setApprovedData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [requestData, setRequestData] = useState(undefined);
+  const [approvedData, setApprovedData] = useState(undefined);
+  const [loading, setLoading] = useState(true);
   const provider = useSelector((state) => state.account.provider.isProvider);
   useEffect(async () => {
     setLoading(true);
     const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
     const accounts = await web3.eth.getAccounts();
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
-    setRequestData(res.data);
-    setLoading(false);
 
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
@@ -34,9 +33,10 @@ function ExchangePage() {
       },
     });
     setApprovedData(retrieval);
-    console.log(retrieval);
+    setRequestData(res.data);
+    setLoading(false);
   }, []);
-  console.log(approvedData);
+
   return (
     <div>
       <Navbar />
@@ -64,23 +64,36 @@ function ExchangePage() {
                 );
               })}
             </div>
+            <Link href="/exchanges/requests">
+              <button className="button-primary" style={{ marginBottom: 20 }}>
+                View All
+              </button>
+            </Link>
           </div>
           <div className="provider-exchanges-section">
             <div className="title pending-exchanges-title">
               Completed Exchanges
             </div>
-            {approvedData.map((item, index) => {
-              const temp = item.returnValues;
-              return (
-                <ExchangeCard
-                  key={index}
-                  provider={temp.provider.toLowerCase()}
-                  reciever={temp.owner.toLowerCase()}
-                  header={temp.header}
-                  hash={item.transactionHash}
-                />
-              );
-            })}
+            {approvedData
+              .slice(0)
+              .reverse()
+              .map((item, index) => {
+                const temp = item.returnValues;
+                return (
+                  <ExchangeCard
+                    key={index}
+                    provider={temp.provider.toLowerCase()}
+                    reciever={temp.owner.toLowerCase()}
+                    header={temp.header}
+                    hash={item.transactionHash}
+                  />
+                );
+              })}
+            <Link href="/exchanges/approved">
+              <button className="button-primary" style={{ marginBottom: 20 }}>
+                View All
+              </button>
+            </Link>
           </div>
         </div>
       )}
