@@ -28,9 +28,14 @@ function Navbar() {
 
   const defaultNavbar = () => {
     return (
-      <Link href="/connect">
-        <div className="navbar-item">About</div>
-      </Link>
+      <>
+        <Link href="/connect">
+          <div className="navbar-item">About</div>
+        </Link>
+        <Link href="/connect">
+          <div className="navbar-item navbar-item-primary">Connect</div>
+        </Link>
+      </>
     );
   };
   return (
@@ -46,7 +51,7 @@ function Navbar() {
         : defaultNavbar()}
       <div id="navbar-stuff">
         <Link href="/connect">
-          <div className="navbar-item">{address ? "Settings" : "Account"}</div>
+          <div className="navbar-item">{address ? "Settings" : false}</div>
         </Link>
       </div>
     </div>

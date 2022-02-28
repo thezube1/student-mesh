@@ -12,9 +12,26 @@
   line-height: 1;
   font-family: "Cabin";
   font-weight: 900;
-  font-size: 20px;
+  font-size: 30px;
   margin-right: 40px;
   cursor: pointer;
+  color: white;
+}
+
+.navbar-item-primary {
+  border-color: var(--primary);
+  border-style: solid;
+  border-width: 2px;
+  padding: 13px 35px;
+  font-size: 25px;
+  font-weight: 900;
+  border-radius: 100px;
+  line-height: 0.9;
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.navbar-item-primary:hover {
+  background-color: var(--primary);
 }
 
 .navbar-item-focused {

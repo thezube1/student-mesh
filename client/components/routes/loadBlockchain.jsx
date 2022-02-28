@@ -24,6 +24,7 @@ function LoadBlockchain() {
   };
 
   const loadBlockChainData = async () => {
+    /*
     const web3Modal = new Web3Modal({
       network: "mainnet",
       providerOptions,
@@ -35,8 +36,8 @@ function LoadBlockchain() {
       web3Modal.providerController.providerOptions[cachedProviderName]
         .connector; // get account
     const proxy = await connector;
-
-    const web3 = new Web3(proxy);
+*/
+    const web3 = new Web3(Web3.givenProvider);
     const accounts = await web3.eth.getAccounts();
     console.log(accounts);
     if (accounts[0] === undefined) {

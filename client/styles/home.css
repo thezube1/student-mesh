@@ -1,14 +1,19 @@
+:root {
+  --primary: #745cff;
+  background-color: #151515;
+}
+
 #wrapper {
   width: 100%;
   height: 100vh;
   display: grid;
-  justify-content: center;
-  align-items: center;
 }
 
 #content {
-  display: grid;
-  justify-items: center;
+  position: relative;
+  height: max-content;
+  top: 30%;
+  justify-self: center;
 }
 
 .title {
@@ -17,10 +22,92 @@
   font-weight: 900;
   line-height: 1;
   margin-bottom: 20px;
+  color: white;
+}
+
+.home-center-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
 }
 
 .header {
   font-family: "Cabin";
   font-size: 20px;
   margin-bottom: 20px;
+}
+
+.home-title {
+  font-size: 150px;
+}
+
+.home-title-purple {
+  font-size: 150px;
+  color: var(--primary);
+}
+
+.vertical-line {
+  background-color: white;
+  height: 170px;
+  width: 1px;
+}
+
+.home-header {
+  color: white;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 30px;
+  width: 500px;
+}
+
+.primary-text {
+  color: var(--primary);
+}
+
+.home-button-wrapper {
+  margin-top: 100px;
+  display: grid;
+  justify-items: center;
+}
+
+.home-button {
+  border-color: var(--primary);
+  color: white;
+  padding: 20px 90px;
+  font-size: 32px;
+  font-weight: 100;
+}
+.home-button:hover {
+  background-color: var(--primary);
+}
+.home-button-secondary {
+  border-color: white;
+  background-color: white;
+  color: black;
+  padding: 15px 75px;
+  font-size: 25px;
+  font-weight: 100;
+  margin-top: 20px;
+}
+.home-button-secondary:hover {
+  color: black;
+  background-color: rgb(236, 236, 236);
+}
+
+@media screen and (max-width: 1217px) {
+  .vertical-line {
+    width: 200px;
+    height: 1px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-title {
+    font-size: 100px;
+  }
+  .home-header {
+    width: 300px;
+  }
 }
