@@ -1,7 +1,13 @@
 import Navbar from "../../navbar/navbar";
 import WaveSVG from "../default/WaveSVG";
+import Link from "next/link";
+import { useEffect } from "react";
 
 function DefaultHome() {
+  useEffect(() => {
+    document.body.style.backgroundColor = "#151515";
+  }, []);
+  useEffect(() => () => (document.body.style.backgroundColor = "white"), []);
   return (
     <div>
       <Navbar />
@@ -35,7 +41,9 @@ function DefaultHome() {
           </div>
 
           <div className="home-button-wrapper">
-            <button className="button home-button">Connect Account</button>
+            <Link href="/connect">
+              <button className="button home-button">Connect Account</button>
+            </Link>
 
             <button className="button home-button-secondary">
               How It Works

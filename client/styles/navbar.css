@@ -15,7 +15,8 @@
   font-size: 30px;
   margin-right: 40px;
   cursor: pointer;
-  color: white;
+  color: black;
+  z-index: 3;
 }
 
 .navbar-item-primary {
@@ -27,6 +28,7 @@
   font-weight: 900;
   border-radius: 100px;
   line-height: 0.9;
+  color: white;
   transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 

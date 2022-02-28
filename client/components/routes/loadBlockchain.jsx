@@ -39,7 +39,6 @@ function LoadBlockchain() {
 */
     const web3 = new Web3(Web3.givenProvider);
     const accounts = await web3.eth.getAccounts();
-    console.log(accounts);
     if (accounts[0] === undefined) {
       dispatch(setProvider({ isProvider: false, school: null }));
       dispatch(setAccount(null));

@@ -26,7 +26,6 @@ function DownloadButtons(props) {
     const name = String(name_res.data.name);
     setFileLink(`https://${cid}.ipfs.dweb.link/${name}`);
   }, []);
-  console.log(fileLink);
   return (
     <>
       <Modal open={open} close={() => setOpen(false)} title="File Preview">

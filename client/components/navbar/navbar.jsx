@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 function Navbar() {
   const address = useSelector((state) => state.account.account);
   const provider = useSelector((state) => state.account.provider.isProvider);
-
+  const router = useRouter();
   const providerNavbar = () => {
     return (
       <>
@@ -30,18 +31,34 @@ function Navbar() {
     return (
       <>
         <Link href="/connect">
-          <div className="navbar-item">About</div>
+          <div
+            className="navbar-item"
+            style={{ color: router.pathname === "/" ? "white" : "black" }}
+          >
+            About
+          </div>
         </Link>
         <Link href="/connect">
-          <div className="navbar-item navbar-item-primary">Connect</div>
+          <div
+            className="navbar-item navbar-item-primary"
+            style={{ color: router.pathname === "/" ? "white" : "black" }}
+          >
+            Connect
+          </div>
         </Link>
       </>
     );
   };
+
   return (
     <div id="navbar-wrapper">
       <Link href="/">
-        <div className="navbar-item">Home</div>
+        <div
+          className="navbar-item"
+          style={{ color: router.pathname === "/" ? "white" : "black" }}
+        >
+          Home
+        </div>
       </Link>
 
       {provider && address !== null
