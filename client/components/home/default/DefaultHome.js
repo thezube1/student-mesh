@@ -51,6 +51,21 @@ function DefaultHome() {
           </div>
         </div>
       </div>
+      <div id="home-wrapper-2">
+        <div className="title home2-header">
+          Transcripts are recorded to the Ethereum blockchain, meaning:
+        </div>
+        <div className="title home2-header">
+          Transcripts are <span className="primary-text">immutable</span>{" "}
+        </div>
+        <div className="title home2-header">
+          They are publicly <span className="primary-text">verifiable</span>{" "}
+        </div>
+        <div className="title home2-header">
+          Each transcript is{" "}
+          <span className="primary-text">user-controlled</span>{" "}
+        </div>
+      </div>
     </div>
   );
 }
