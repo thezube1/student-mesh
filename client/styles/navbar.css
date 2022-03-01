@@ -6,6 +6,7 @@
   align-items: center;
   padding-top: 25px;
   padding-left: 40px;
+  z-index: 4;
 }
 
 .navbar-item {
@@ -16,7 +17,7 @@
   margin-right: 40px;
   cursor: pointer;
   color: black;
-  z-index: 3;
+  z-index: 4;
 }
 
 .navbar-item-primary {
