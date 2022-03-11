@@ -7,10 +7,6 @@ import { useEffect } from "react";
 import * as Scroll from "react-scroll";
 
 function DefaultHome() {
-  useEffect(() => {
-    document.body.style.backgroundColor = "#151515";
-  }, []);
-  useEffect(() => () => (document.body.style.backgroundColor = "white"), []);
   return (
     <div>
       <Navbar />

@@ -132,6 +132,7 @@ input[type="file"] {
 
 .provider-exchange-text {
   margin-bottom: 10px;
+  color: black;
 }
 
 /* Media queries */

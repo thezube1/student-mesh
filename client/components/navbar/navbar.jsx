@@ -31,20 +31,10 @@ function Navbar() {
     return (
       <>
         <Link href="/connect">
-          <div
-            className="navbar-item"
-            style={{ color: router.pathname === "/" ? "white" : "black" }}
-          >
-            About
-          </div>
+          <div className="navbar-item">About</div>
         </Link>
         <Link href="/connect">
-          <div
-            className="navbar-item navbar-item-primary"
-            style={{ color: router.pathname === "/" ? "white" : "black" }}
-          >
-            Connect
-          </div>
+          <div className="navbar-item navbar-item-primary">Connect</div>
         </Link>
       </>
     );
@@ -53,15 +43,7 @@ function Navbar() {
   return (
     <div id="navbar-wrapper">
       <Link href="/">
-        <div
-          className="navbar-item"
-          style={{
-            color:
-              router.pathname === "/" && address === null ? "white" : "black",
-          }}
-        >
-          Home
-        </div>
+        <div className="navbar-item">Home</div>
       </Link>
 
       {provider && address !== null

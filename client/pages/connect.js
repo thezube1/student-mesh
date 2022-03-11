@@ -29,6 +29,7 @@ function ConnectPage() {
         network: "mainnet",
         providerOptions,
         cacheProvider: true,
+        theme: "dark",
       });
       const provider = await web3Modal.connect();
       const web3 = new Web3(provider);
@@ -64,6 +65,7 @@ function ConnectPage() {
         network: "mainnet",
         cacheProvider: true,
         providerOptions,
+        theme: "dark",
       });
       const provider = await web3Modal.connect();
       const web3 = new Web3(provider);
