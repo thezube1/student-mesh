@@ -28,7 +28,7 @@ function DefaultHome() {
         </div>
         <div id="content">
           <div className="home-center-content">
-            <div className="title">
+            <div className="title title-white">
               <div className="home-title">Student</div>
               <div className="home-title-purple">Mesh</div>
             </div>
@@ -65,16 +65,19 @@ function DefaultHome() {
           }}
         >
           <div style={{ display: "grid", justifyItems: "center" }}>
-            <div className="title home2-header" style={{ fontSize: 35 }}>
+            <div
+              className="title title-white home2-header"
+              style={{ fontSize: 35 }}
+            >
               Transcripts are recorded to the Ethereum blockchain, meaning:
             </div>
-            <div className="title home2-header">
+            <div className="title title-white  home2-header">
               Transcripts are <span className="primary-text">immutable</span>{" "}
             </div>
-            <div className="title home2-header">
+            <div className="title  title-white home2-header">
               They are publicly <span className="primary-text">verifiable</span>{" "}
             </div>
-            <div className="title home2-header">
+            <div className="title title-white  home2-header">
               Each transcript is{" "}
               <span className="primary-text">user-controlled</span>{" "}
             </div>{" "}

@@ -9,65 +9,65 @@ function DistributedSVG() {
       <path
         d="M47.7795 216.52C73.0629 216.52 93.5591 209.688 93.5591 201.26C93.5591 192.832 73.0629 186 47.7795 186C22.4962 186 2 192.832 2 201.26C2 209.688 22.4962 216.52 47.7795 216.52Z"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M93.5591 237C93.5591 245.444 73.2126 252.26 47.7795 252.26C22.3465 252.26 2 245.444 2 237"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M2 201.26V272.693C2 281.163 22.3465 288 47.7795 288C73.2126 288 93.5591 281.163 93.5591 272.693V201.26"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M158.78 32.5197C184.063 32.5197 204.559 25.6876 204.559 17.2598C204.559 8.83206 184.063 2 158.78 2C133.496 2 113 8.83206 113 17.2598C113 25.6876 133.496 32.5197 158.78 32.5197Z"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M204.559 53C204.559 61.4438 184.213 68.2598 158.78 68.2598C133.346 68.2598 113 61.4438 113 53"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M113 17.2598V88.6929C113 97.1628 133.346 104 158.78 104C184.213 104 204.559 97.1628 204.559 88.6929V17.2598"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M265.78 215.52C291.063 215.52 311.559 208.688 311.559 200.26C311.559 191.832 291.063 185 265.78 185C240.496 185 220 191.832 220 200.26C220 208.688 240.496 215.52 265.78 215.52Z"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M311.559 236C311.559 244.444 291.213 251.26 265.78 251.26C240.346 251.26 220 244.444 220 236"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M220 200.26V271.693C220 280.163 240.346 287 265.78 287C291.213 287 311.559 280.163 311.559 271.693V200.26"
         stroke="#745CFF"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M59 171.569C59 172.121 59.4477 172.569 60 172.569L69 172.569C69.5523 172.569 70 172.121 70 171.569C70 171.016 69.5523 170.569 69 170.569L61 170.569L61 162.569C61 162.016 60.5523 161.569 60 161.569C59.4477 161.569 59 162.016 59 162.569L59 171.569ZM117.569 115C117.569 114.448 117.121 114 116.569 114L107.569 114C107.016 114 106.569 114.448 106.569 115C106.569 115.552 107.016 116 107.569 116L115.569 116L115.569 124C115.569 124.552 116.016 125 116.569 125C117.121 125 117.569 124.552 117.569 124L117.569 115ZM60.7071 172.276L117.276 115.707L115.861 114.293L59.2929 170.861L60.7071 172.276Z"

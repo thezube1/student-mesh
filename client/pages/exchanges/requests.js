@@ -6,6 +6,7 @@ import Web3 from "web3";
 import LoadingWheel from "../../components/loading/LoadingWheel";
 import ExchangeCard from "../../components/provider/ExchangeCard";
 import axios from "axios";
+import getProvider from "../../components/libs/getProvider";
 
 function RequestsPage() {
   const provider = useSelector((state) => state.account.provider.isProvider);
@@ -13,7 +14,8 @@ function RequestsPage() {
   const [loading, setLoading] = useState(true);
   useEffect(async () => {
     setLoading(true);
-    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const provider = await getProvider();
+    const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
 
@@ -35,10 +37,11 @@ function RequestsPage() {
               return (
                 <ExchangeCard
                   key={index}
-                  provider={temp.provider.toLowerCase()}
-                  reciever={temp.owner.toLowerCase()}
-                  header={temp.header}
-                  hash={item.transactionHash}
+                  provider={item.provider.toLowerCase()}
+                  reciever={item.reciever.toLowerCase()}
+                  header={item.header}
+                  hash={item._id}
+                  request
                 />
               );
             })}

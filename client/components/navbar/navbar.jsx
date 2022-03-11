@@ -55,7 +55,10 @@ function Navbar() {
       <Link href="/">
         <div
           className="navbar-item"
-          style={{ color: router.pathname === "/" ? "white" : "black" }}
+          style={{
+            color:
+              router.pathname === "/" && address === null ? "white" : "black",
+          }}
         >
           Home
         </div>

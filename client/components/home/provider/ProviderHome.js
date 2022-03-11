@@ -5,12 +5,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Web3 from "web3";
 import Link from "next/link";
+import getProvider from "../../libs/getProvider";
 
 function ProviderHome() {
   const school = useSelector((state) => state.account.provider.school);
   const [data, setData] = useState(undefined);
   useEffect(async () => {
-    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const provider = await getProvider();
+    const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
     setData(res.data);
@@ -42,14 +44,15 @@ function ProviderHome() {
                 .slice(0)
                 .reverse()
                 .map((item, index) => {
-                  const temp = item.returnValues;
+                  console.log(item);
                   return (
                     <ExchangeCard
                       key={index}
-                      provider={temp.provider.toLowerCase()}
-                      reciever={temp.owner.toLowerCase()}
-                      header={temp.header}
-                      hash={item.transactionHash}
+                      provider={item.provider.toLowerCase()}
+                      reciever={item.reciever.toLowerCase()}
+                      header={item.header}
+                      hash={item._id}
+                      request
                     />
                   );
                 })

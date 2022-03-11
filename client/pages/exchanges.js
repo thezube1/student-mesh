@@ -8,28 +8,32 @@ import withAuth from "../components/routes/withAuth";
 import axios from "axios";
 import LoadingWheel from "../components/loading/LoadingWheel";
 import Link from "next/link";
+import getProvider from "../components/libs/getProvider";
 
 function ExchangePage() {
   const [requestData, setRequestData] = useState(undefined);
   const [approvedData, setApprovedData] = useState(undefined);
   const [loading, setLoading] = useState(true);
-  const provider = useSelector((state) => state.account.provider.isProvider);
+  const isProvider = useSelector((state) => state.account.provider.isProvider);
   useEffect(async () => {
     setLoading(true);
-    const web3 = new Web3(Web3.givenProvider || "HTTP://127.0.0.1:7545");
+    const provider = await getProvider();
+    const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
+
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
 
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
       STUDENTS_ADDRESS
     );
+
     const retrieval = await studentContract.getPastEvents("Transcript", {
       fromBlock: 0,
       toBlock: "latest",
       filter: {
-        provider: provider ? accounts[0] : false,
-        reciever: provider ? false : accounts[0],
+        provider: isProvider ? accounts[0] : false,
+        reciever: isProvider ? false : accounts[0],
       },
     });
     setApprovedData(retrieval);

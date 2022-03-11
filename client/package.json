@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@coinbase/wallet-sdk": "^3.0.1",
     "@react-native-async-storage/async-storage": "^1.15.14",
     "@reduxjs/toolkit": "^1.7.1",
     "abi-decoder": "^2.4.0",
@@ -26,7 +27,6 @@
     "react-scroll": "^1.8.5",
     "redux-persist": "^6.0.0",
     "wallet-address-validator": "^0.2.4",
-    "walletlink": "^2.4.7",
     "web3": "^1.6.1",
     "web3.storage": "^3.5.2",
     "web3modal": "^1.9.5"
