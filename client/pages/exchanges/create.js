@@ -129,7 +129,7 @@ function CreateExchangePage() {
                 false
               ) : (
                 <button
-                  className="button"
+                  className="button provider-confirm-cancel"
                   onClick={() => {
                     setOpen(false);
                   }}

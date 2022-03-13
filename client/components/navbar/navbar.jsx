@@ -34,7 +34,7 @@ function Navbar() {
           <div className="navbar-item">About</div>
         </Link>
         <Link href="/connect">
-          <div className="navbar-item navbar-item-primary">Connect</div>
+          <div className="navbar-item-primary">Connect</div>
         </Link>
       </>
     );

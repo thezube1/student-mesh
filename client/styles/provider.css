@@ -78,6 +78,7 @@ input[type="file"] {
 
 .provider-confirm-text {
   margin-bottom: 20px;
+  color: black;
 }
 
 .provider-confirm-bold {
@@ -88,6 +89,14 @@ input[type="file"] {
 #provider-confirm-buttons {
   display: flex;
   align-items: center;
+}
+
+.provider-confirm-cancel {
+  color: black;
+}
+
+.provider-confirm-cancel:hover {
+  color: white;
 }
 
 #provider-confirm-spinner {

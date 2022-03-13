@@ -20,7 +20,30 @@
   z-index: 4;
 }
 
+.navbar-item::after {
+  padding-bottom: 2px;
+  content: "";
+  display: block;
+  border-bottom: 3px solid var(--primary);
+  width: 0%;
+  position: absolute;
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.navbar-item:hover:after {
+  width: 80px;
+}
+
 .navbar-item-primary {
+  line-height: 1;
+  font-family: "Cabin";
+  font-weight: 900;
+  font-size: 30px;
+  margin-right: 40px;
+  cursor: pointer;
+  color: white;
+  z-index: 4;
   border-color: var(--primary);
   border-style: solid;
   border-width: 2px;
