@@ -128,7 +128,7 @@ input[type="file"] {
 }
 
 .exchange-card-wrapper {
-  background-color: #f4f4f4;
+  background-color: #ffffff;
   width: 360px;
   height: 200px;
   border-radius: 20px;
@@ -137,6 +137,11 @@ input[type="file"] {
   padding: 10px;
   margin-bottom: 20px;
   cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.exchange-card-wrapper:hover {
+  background-color: #f0f0f0;
 }
 
 .provider-exchange-text {

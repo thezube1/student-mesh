@@ -7,6 +7,7 @@
 
 .exchange-info {
   margin-top: 20px;
+  color: white;
 }
 
 .exchange-values {
@@ -18,14 +19,14 @@
   font-size: "Cabin";
   font-size: 18px;
   margin-bottom: 2px;
-  color: rgb(51, 51, 51);
+  color: white;
   font-weight: 600;
 }
 
 .exchange-vertical-line {
   width: 2px;
   height: 20px;
-  background-color: black;
+  background-color: var(--primary);
   margin-left: 10px;
   margin-right: 10px;
 }

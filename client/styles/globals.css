@@ -75,8 +75,8 @@ a {
 }
 
 .form-error {
-  color: red;
-  margin-bottom: 10px;
+  color: rgb(255, 51, 51);
+  margin-bottom: 0px;
   justify-self: left;
 }
 
