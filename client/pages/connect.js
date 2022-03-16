@@ -4,18 +4,24 @@ import Web3 from "web3";
 import Web3Modal from "web3modal";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { useSelector, useDispatch } from "react-redux";
-import { setAccount, setProvider } from "../redux/reducers/accountReducer";
+import {
+  setAccount,
+  setName,
+  setProvider,
+} from "../redux/reducers/accountReducer";
 import Providers from "../providers.json";
 import { useEffect, useState } from "react";
 import RegisterNameButton from "../components/connect/RegisterNameButton";
-import getProvider from "../components/libs/getProvider";
-import Modal from "../components/modal/Modal";
+import axios from "axios";
 
 function ConnectPage() {
   const account = useSelector((state) => state.account.account);
+  const isProvider = useSelector((state) => state.account.provider);
   const dispatch = useDispatch();
-  const [isRegistering, setRegistering] = useState();
-  const [open, setOpen] = useState(false);
+  const [isRegistered, setRegistered] = useState(true);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [freshConnect, setFreshConnect] = useState(false);
 
   const providerOptions = {
     walletlink: {
@@ -39,6 +45,14 @@ function ConnectPage() {
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
       dispatch(setAccount(accounts[0]));
+      const registeredWallet = await axios.get(`/api/wallet/${accounts[0]}`);
+      if (registeredWallet.data.registered) {
+        setRegistered(true);
+        setFirst(registeredWallet.data.first);
+        setLast(registeredWallet.data.last);
+      } else {
+        setRegistered(false);
+      }
       let isProvider = false;
       let school = null;
       Providers.providers.map((item) => {
@@ -48,6 +62,7 @@ function ConnectPage() {
         }
       });
       dispatch(setProvider({ provider: isProvider, school: school }));
+      setFreshConnect(true);
     } catch (error) {
       console.log(error);
     }
@@ -61,6 +76,9 @@ function ConnectPage() {
     web3Modal.clearCachedProvider();
     dispatch(setAccount(null));
     dispatch(setProvider({ provider: null, school: null }));
+    setRegistered(false);
+    setFirst(false);
+    setLast(false);
   };
 
   useEffect(async () => {
@@ -84,6 +102,17 @@ function ConnectPage() {
         }
       });
       dispatch(setProvider({ provider: isProvider, school: school }));
+      setFreshConnect(true);
+    } else {
+      // check if wallet is in our database
+      const registeredWallet = await axios.get(`/api/wallet/${account}`);
+      if (registeredWallet.data.registered) {
+        setRegistered(true);
+        setFirst(registeredWallet.data.first);
+        setLast(registeredWallet.data.last);
+      } else {
+        setRegistered(false);
+      }
     }
   }, []);
 
@@ -103,17 +132,48 @@ function ConnectPage() {
             </div>
           ) : (
             <div style={{ display: "grid", justifyItems: "center" }}>
+              {isProvider.isProvider ? (
+                <div
+                  className="header"
+                  style={{ marginBottom: 10, color: "white", fontSize: 30 }}
+                >
+                  <span>Welcome back, </span>
+                  <span style={{ fontWeight: 900 }}>{isProvider.school}</span>
+                </div>
+              ) : isRegistered ? (
+                <div
+                  className="header"
+                  style={{ marginBottom: 10, color: "white", fontSize: 30 }}
+                >
+                  <span>Welcome back, </span>
+                  <span style={{ fontWeight: 900 }}>
+                    {first} {last}
+                  </span>
+                </div>
+              ) : (
+                false
+              )}
               <div className="text" style={{ marginBottom: 10 }}>
-                Connected with <b>{account}</b>
+                Connected wallet: <b>{account}</b>
               </div>
-              <RegisterNameButton />
-              {/* <div className="text">Register name</div>
-              <input type="text" className="input"></input>*/}
-              <Link href="/">
-                <button className="button" style={{ marginBottom: 10 }}>
-                  Return to home
-                </button>
-              </Link>
+              {freshConnect ? (
+                <Link href="/">
+                  <button
+                    className="button-primary"
+                    style={{ marginBottom: 10 }}
+                  >
+                    Return to home
+                  </button>
+                </Link>
+              ) : (
+                false
+              )}
+              {isProvider.isProvider ? (
+                false
+              ) : (
+                <RegisterNameButton isRegistered={isRegistered} />
+              )}
+
               <button className="button" onClick={() => disconnect()}>
                 Disconnect Wallet
               </button>

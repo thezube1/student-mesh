@@ -3,12 +3,18 @@ import { useState } from "react";
 import axios from "axios";
 import Web3 from "web3";
 import getProvider from "../libs/getProvider";
+import { useRouter } from "next/router";
 
-function RegisterNameButton() {
+function RegisterNameButton(props) {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const router = useRouter();
 
   const register = async () => {
+    setLoading(true);
     const provider = await getProvider();
     const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
@@ -22,15 +28,16 @@ function RegisterNameButton() {
         "content-type": "application/json",
       },
     };
-    await axios.post(
-      "/api/wallet",
-      {
-        signature: sign,
-        wallet: accounts[0],
-        name: name,
-      },
-      config
-    );
+    const data = {
+      signature: sign,
+      wallet: accounts[0],
+      first: first,
+      last: last,
+    };
+    await axios.post("/api/wallet", data, config);
+    setLoading(false);
+    setCompleted(true);
+    router.reload();
   };
   return (
     <div>
@@ -44,40 +51,66 @@ function RegisterNameButton() {
             alignContent: "center",
           }}
         >
-          <div className="text" style={{ color: "black", marginBottom: 10 }}>
-            Register name
+          <div
+            className="text"
+            style={{
+              color: "black",
+              marginBottom: 30,
+              fontSize: 25,
+              fontWeight: 900,
+            }}
+          >
+            {props.isRegistered ? "Update name" : "Register name"}
           </div>
-          <input
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            className="input"
-            style={{ maxWidth: 300, marginBottom: 10 }}
-          ></input>
+          <div style={{ display: "grid", justifyItems: "center" }}>
+            <div className="text form-label">First Name</div>
+            <input
+              type="text"
+              onChange={(e) => setFirst(e.target.value)}
+              className="input"
+              style={{ maxWidth: 250, marginBottom: 10 }}
+            ></input>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              justifyItems: "center",
+              marginBottom: 25,
+            }}
+          >
+            <div className="text form-label">Last Name</div>
+            <input
+              type="text"
+              onChange={(e) => setLast(e.target.value)}
+              className="input"
+              style={{ maxWidth: 250, marginBottom: 10 }}
+            ></input>
+          </div>
           <button onClick={() => register()} className="button-primary">
-            Register
+            {loading ? (
+              <div id="provider-confirm-spinner"></div>
+            ) : props.isRegistered ? (
+              "Update"
+            ) : (
+              "Register"
+            )}
           </button>
         </div>
       </Modal>
       <div>
         <button
           style={{ marginBottom: 10 }}
-          className="button-primary"
+          className={props.isRegistered ? "button" : "button-primary"}
           onClick={() => setOpen(true)}
         >
-          Register name
+          {loading ? (
+            <div id="provider-confirm-spinner"></div>
+          ) : props.isRegistered ? (
+            "Update name"
+          ) : (
+            "Register name"
+          )}
         </button>
-        {/* {isRegistering ? (
-                <div style={{ marginBottom: 10 }}>
-                  <div className="text">Register name</div>
-                  <input
-                    type="text"
-                    className="input"
-                    style={{ maxWidth: 300 }}
-                  ></input>
-                </div>
-              ) : (
-                false
-              )}*/}
       </div>
     </div>
   );

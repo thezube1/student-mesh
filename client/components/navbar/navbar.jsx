@@ -30,7 +30,7 @@ function Navbar() {
   const defaultNavbar = () => {
     return (
       <>
-        <Link href="/connect">
+        <Link href="/about">
           <div className="navbar-item">About</div>
         </Link>
         <Link href="/connect">

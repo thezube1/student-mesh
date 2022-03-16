@@ -21,35 +21,35 @@ const client = new MongoClient(url);
 let web3 = new Web3(new Web3.providers.HttpProvider("https://****/"));
 
 apiRoute.post(async (req, res) => {
-  console.log(req.body);
-
-  /*
+  const signature = req.body.signature;
   let recoveredAddress = await web3.eth.accounts.recover(
     web3.utils.sha3("test"),
     signature
   );
-  if (recoveredAddress.normalize() === req.body.wallet()) {
-    console.log("Cool!");
+  if (recoveredAddress.normalize() === req.body.wallet.normalize()) {
+    const first = req.body.first;
+    const last = req.body.last;
+    const wallet = req.body.wallet;
+    await client.connect();
+    const db = client.db(process.env.DB_NAME);
+    const collection = db.collection("wallets");
+    await collection.updateOne(
+      {
+        wallet: wallet,
+      },
+      {
+        $set: {
+          wallet: wallet,
+          first: first,
+          last: last,
+        },
+      },
+      {
+        upsert: true,
+      }
+    );
+    await res.status(200).send({ updated: true });
   }
-  */
-
-  /*
-  await client.connect();
-  const db = client.db(process.env.DB_NAME);
-  const collection = db.collection("wallets");
-  await collection.insertOne({
-    wallet: req.body.wallet,
-    username: req.body.username,
-    name: req.body.name,
-  });
-  */
-  await res.status(200).send({ status: true });
 });
 
 export default apiRoute;
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};

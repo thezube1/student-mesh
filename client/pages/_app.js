@@ -8,6 +8,7 @@ import "../styles/provider.css";
 import "../styles/exchange.css";
 import "../styles/approved.css";
 import "../styles/requests.css";
+import "../styles/about.css";
 
 // Imports
 import store from "../redux/store";

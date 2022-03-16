@@ -37,11 +37,8 @@ function LoadBlockchain() {
       web3Modal.clearCachedProvider();
     }
 
-    console.log(cachedProviderName);
-
     if (cachedProviderName !== null) {
       const provider = await getProvider();
-      console.log(provider);
       try {
         const web3 = new Web3(provider);
         const accounts = await web3.eth.getAccounts();
@@ -61,10 +58,6 @@ function LoadBlockchain() {
         }
         f;
       } catch (error) {
-        const web3Modal = new Web3Modal({
-          network: "mainnet",
-          providerOptions,
-        });
         //web3Modal.clearCachedProvider();
       }
     } else {
@@ -80,32 +73,3 @@ function LoadBlockchain() {
 }
 
 export default LoadBlockchain;
-
-/*
-      // get contract
-      if (accounts[0]) {
-        const studentContract = new web3.eth.Contract(
-          STUDENTS_ABI,
-          STUDENTS_ADDRESS
-        );
-        const data = await studentContract.getPastEvents("Student", {
-          fromBlock: 0,
-          toBlock: "latest",
-          filter: { _from: accounts[0] },
-        });
-        if (data.length !== 0) {
-          dispatch(setRegistered(true));
-          dispatch(
-            setName({
-              first: data[0].returnValues._first,
-              last: data[0].returnValues._last,
-            })
-          );
-        } else {
-          dispatch(setRegistered(false));
-        }
-      }
-    } else {
-      console.log("No metamask detected");
-    }
-    */
