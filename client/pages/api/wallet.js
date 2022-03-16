@@ -18,7 +18,15 @@ const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@student
 const client = new MongoClient(url);
 
 apiRoute.post(async (req, res) => {
-  await res.status(200).send({ message: "Hello!" });
+  await client.connect();
+  const db = client.db(process.env.DB_NAME);
+  const collection = db.collection("wallets");
+  await collection.insertOne({
+    wallet: req.body.wallet,
+    username: req.body.username,
+    name: req.body.name,
+  });
+  await res.status(200).send({ status: true });
 });
 
 export default apiRoute;

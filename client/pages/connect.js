@@ -6,12 +6,16 @@ import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { useSelector, useDispatch } from "react-redux";
 import { setAccount, setProvider } from "../redux/reducers/accountReducer";
 import Providers from "../providers.json";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import RegisterNameButton from "../components/connect/RegisterNameButton";
 import getProvider from "../components/libs/getProvider";
+import Modal from "../components/modal/Modal";
 
 function ConnectPage() {
   const account = useSelector((state) => state.account.account);
   const dispatch = useDispatch();
+  const [isRegistering, setRegistering] = useState();
+  const [open, setOpen] = useState(false);
 
   const providerOptions = {
     walletlink: {
@@ -102,6 +106,9 @@ function ConnectPage() {
               <div className="text" style={{ marginBottom: 10 }}>
                 Connected with <b>{account}</b>
               </div>
+              <RegisterNameButton />
+              {/* <div className="text">Register name</div>
+              <input type="text" className="input"></input>*/}
               <Link href="/">
                 <button className="button" style={{ marginBottom: 10 }}>
                   Return to home
