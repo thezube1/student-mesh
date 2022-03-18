@@ -48,7 +48,7 @@ function DownloadButtons(props) {
           <div
             style={{
               position: "relative",
-              right: 30,
+              right: 20,
               width: 1,
               bottom: 1,
             }}

@@ -1,8 +1,20 @@
 import Link from "next/link";
 import Providers from "../../providers.json";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function ExchangeCard(props) {
-  console.log(Providers.providers);
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  const [registered, setRegistered] = useState(false);
+  useEffect(async () => {
+    const user = await axios.get(`/api/wallet/${props.reciever.toLowerCase()}`);
+    setRegistered(user.data.registered);
+    if (user.data.registered) {
+      setFirst(user.data.first);
+      setLast(user.data.last);
+    }
+  }, []);
   return (
     <Link
       href={
@@ -33,7 +45,10 @@ function ExchangeCard(props) {
           </div>
           <div className="text provider-exchange-text">
             <span>
-              Student: <span style={{ fontWeight: 900 }}>Student Name</span>
+              Student:{" "}
+              <span style={{ fontWeight: 900 }}>
+                {registered ? `${first} ${last}` : "Unknown"}
+              </span>
             </span>{" "}
             <div style={{ fontWeight: 100, fontSize: 14 }}>
               {props.reciever}

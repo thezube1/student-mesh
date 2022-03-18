@@ -1,4 +1,7 @@
 const path = require("path");
+const { mnemonic, projectId } = require("./secret.json");
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
 module.exports = {
   contracts_build_directory: path.join(__dirname, "client/contracts"),
   /**
@@ -16,6 +19,17 @@ module.exports = {
       host: "127.0.0.1",
       port: 7545,
       network_id: "*",
+    },
+    ropsten: {
+      provider: () =>
+        new HDWalletProvider(
+          mnemonic,
+          `https://ropsten.infura.io/v3/${projectId}`
+        ),
+      network_id: "3", // Ropsten's id
+      gas: 2000000, // Ropsten has a lower block limit than mainnet
+      confirmations: 2, // # of confs to wait between deployments. (default: 0)
+      timeoutBlocks: 200, // # of blocks before a deployment times out  (minimum/default: 50)
     },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.

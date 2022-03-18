@@ -14,7 +14,7 @@ function SearchSVG() {
         cy="4.91505"
         r="3"
         transform="rotate(38.2123 5.65075 4.91505)"
-        stroke="black"
+        stroke="white"
       />
       <rect
         x="3.71146"
@@ -23,7 +23,7 @@ function SearchSVG() {
         height="6"
         rx="0.5"
         transform="rotate(38.2123 3.71146 6.57008)"
-        fill="black"
+        fill="white"
       />
     </svg>
   );

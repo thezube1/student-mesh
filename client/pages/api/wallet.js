@@ -35,11 +35,11 @@ apiRoute.post(async (req, res) => {
     const collection = db.collection("wallets");
     await collection.updateOne(
       {
-        wallet: wallet,
+        wallet: wallet.toLowerCase(),
       },
       {
         $set: {
-          wallet: wallet,
+          wallet: wallet.toLowerCase(),
           first: first,
           last: last,
         },

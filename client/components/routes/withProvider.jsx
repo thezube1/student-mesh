@@ -1,8 +1,8 @@
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-const withProvider = (WrappedComponent) => {
+
+function withProvider() {
   return (props) => {
-    // checks whether we are on client / browser or server.
     if (typeof window !== "undefined") {
       const Router = useRouter();
 
@@ -21,6 +21,6 @@ const withProvider = (WrappedComponent) => {
     // If we are on server, return null
     return null;
   };
-};
+}
 
 export default withProvider;
