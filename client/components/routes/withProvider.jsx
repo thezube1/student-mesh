@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 
-function withProvider() {
+function withProvider(WrappedComponent) {
   return (props) => {
     if (typeof window !== "undefined") {
       const Router = useRouter();
