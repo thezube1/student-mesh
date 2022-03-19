@@ -78,7 +78,7 @@ function DefaultHome() {
               <span className="primary-text">user-controlled</span>{" "}
             </div>{" "}
           </div>
-          <div style={{ maxWidth: 400, width: "90%" }}>
+          <div style={{ maxWidth: 400, width: "90%", marginBottom: 50 }}>
             <DistributedSVG />
           </div>
         </div>
