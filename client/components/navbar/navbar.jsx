@@ -14,8 +14,9 @@ function Navbar() {
         <Link href="/exchanges">
           <div
             className={`navbar-item ${mobile ? "navbar-item-mobile" : false}`}
+            id="nav-exchanges"
           >
-            View Exchanges
+            Exchanges
           </div>
         </Link>
         <Link href="/exchanges/create">
@@ -34,7 +35,10 @@ function Navbar() {
   const accountNavbar = (mobile) => {
     return (
       <Link href="/exchanges">
-        <div className={`navbar-item ${mobile ? "navbar-item-mobile" : false}`}>
+        <div
+          id="nav-exchanges"
+          className={`navbar-item ${mobile ? "navbar-item-mobile" : false}`}
+        >
           Exchanges
         </div>
       </Link>
@@ -81,7 +85,11 @@ function Navbar() {
               ? accountNavbar(true)
               : defaultNavbar(true)}
             <Link href="/connect">
-              <div className="navbar-item navbar-item-mobile">
+              <div
+                className="navbar-item navbar-item-mobile"
+                id="nav-settings"
+                style={{ marginTop: 30 }}
+              >
                 {address ? "Settings" : false}
               </div>
             </Link>
@@ -122,7 +130,7 @@ function Navbar() {
               : defaultNavbar()}
             <div id="navbar-stuff">
               <Link href="/connect">
-                <div className="navbar-item">
+                <div className="navbar-item" id="nav-settings">
                   {address ? "Settings" : false}
                 </div>
               </Link>

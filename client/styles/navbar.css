@@ -167,3 +167,11 @@
     padding: 25px;
   }
 }
+
+#nav-settings:hover::after {
+  width: 105px;
+}
+
+#nav-exchanges:hover::after {
+  width: 135px;
+}
