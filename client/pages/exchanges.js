@@ -33,9 +33,10 @@ function ExchangePage() {
       toBlock: "latest",
       filter: {
         provider: isProvider ? accounts[0] : false,
-        reciever: isProvider ? false : accounts[0],
+        owner: isProvider ? false : accounts[0],
       },
     });
+
     setApprovedData(retrieval);
     setRequestData(res.data);
     setLoading(false);

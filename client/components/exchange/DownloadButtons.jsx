@@ -55,7 +55,7 @@ function DownloadButtons(props) {
           >
             <SearchSVG />
           </div>
-          <span>View File</span>
+          <span style={{ position: "relative", left: 2 }}>View File</span>
         </button>
         <button
           className="button-primary"

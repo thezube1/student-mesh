@@ -9,8 +9,11 @@ export default async () => {
     false;
   } else if (cachedProviderName === "walletlink") {
     let walletLink = new CoinbaseWalletSDK({ appName: "Student Mesh" });
-    provider = walletLink.makeWeb3Provider("HTTP://127.0.0.1:7545", 1337);
-    //provider = await provider.enable();
+    //provider = walletLink.makeWeb3Provider("HTTP://127.0.0.1:7545", 1337);
+    provider = walletLink.makeWeb3Provider(
+      "https://mainnet.infura.io/v3/95853d14d95d4892b97ca9158cf30b33",
+      3
+    );
   } else if (
     cachedProviderName === "metamask" ||
     (cachedProviderName === "injected" && window.ethereum !== undefined)

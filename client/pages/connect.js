@@ -28,15 +28,18 @@ function ConnectPage() {
       package: CoinbaseWalletSDK,
       options: {
         appName: "Student Mesh",
-        rpc: "localhost:7545",
-        chainId: 1337,
+        rpc: "https://mainnet.infura.io/v3/95853d14d95d4892b97ca9158cf30b33",
+        chainId: 3,
+        //rpc: "localhost:7545",
+        //chainId: 1337,
       },
     },
   };
   const connect = async () => {
     try {
       const web3Modal = new Web3Modal({
-        network: "mainnet",
+        //network: "mainnet",
+        network: "ropsten",
         providerOptions,
         cacheProvider: true,
         theme: "dark",
@@ -84,7 +87,8 @@ function ConnectPage() {
   useEffect(async () => {
     if (!account) {
       const web3Modal = new Web3Modal({
-        network: "mainnet",
+        //network: "mainnet",
+        network: "ropsten",
         cacheProvider: true,
         providerOptions,
         theme: "dark",
@@ -105,7 +109,9 @@ function ConnectPage() {
       setFreshConnect(true);
     } else {
       // check if wallet is in our database
-      const registeredWallet = await axios.get(`/api/wallet/${account}`);
+      const registeredWallet = await axios.get(
+        `/api/wallet/${account.toLowerCase()}`
+      );
       if (registeredWallet.data.registered) {
         setRegistered(true);
         setFirst(registeredWallet.data.first);
