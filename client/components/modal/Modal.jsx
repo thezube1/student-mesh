@@ -5,10 +5,11 @@ function ModalGroup(props) {
     <Modal
       isOpen={props.open}
       onRequestClose={props.close}
-      contentLabel="Example Modal"
+      contentLabel="Modal"
       overlayClassName={"modal-overlay"}
       className={"modal"}
       ariaHideApp={false}
+      closeTimeoutMS={500}
     >
       <button className="modal-close" onClick={props.close}>
         <div className="modal-close-line modal-line-1"></div>

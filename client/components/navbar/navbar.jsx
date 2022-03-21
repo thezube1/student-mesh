@@ -85,11 +85,7 @@ function Navbar() {
               ? accountNavbar(true)
               : defaultNavbar(true)}
             <Link href="/connect">
-              <div
-                className="navbar-item navbar-item-mobile"
-                id="nav-settings"
-                style={{ marginTop: 30 }}
-              >
+              <div className="navbar-item navbar-item-mobile" id="nav-settings">
                 {address ? "Settings" : false}
               </div>
             </Link>
