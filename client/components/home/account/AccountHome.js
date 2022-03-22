@@ -3,52 +3,68 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import LoadingWheel from "../../loading/LoadingWheel";
 import Navbar from "../../navbar/navbar";
-import AccountInfo from "../../account/AccountInfo";
 import axios from "axios";
-import RegisterNameButton from "../../connect/RegisterNameButton";
+import Web3 from "web3";
+import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../../config";
+
+import getProvider from "../../libs/getProvider";
+
+import RegisteredAccount from "./RegisteredAccount";
+import NumberTranscripts from "./NumberTranscripts";
 
 function AccountPage() {
-  const account = useSelector((state) => state.account.account);
-  const [name, setName] = useState({ first: "", last: "" });
-  const [registered, setRegistered] = useState(undefined);
+  const wallet = useSelector((state) => state.account.account);
+  const isProvider = useSelector((state) => state.account.provider.isProvider);
+  const [requests, setRequests] = useState(undefined);
+  const [accepted, setAccepted] = useState(undefined);
+  const [loading, setLoading] = useState(true);
   useEffect(async () => {
-    const data = await axios.get(`/api/wallet/${account.toLowerCase()}`);
-    await setRegistered(data.data.registered);
-    if (data.data.registered) {
-      console.log(data.data);
-      await setName({ first: data.data.first, last: data.data.last });
-    } else {
-      setName(false);
-    }
+    // getting pending transcripts
+    const requests = await axios.get(`/api/request/wallet/${wallet}`);
+    setRequests(requests.data);
+
+    // getting accepted transcripts
+    const provider = await getProvider();
+    const web3 = new Web3(provider);
+    const accounts = await web3.eth.getAccounts();
+    const studentContract = new web3.eth.Contract(
+      STUDENTS_ABI,
+      STUDENTS_ADDRESS
+    );
+
+    const accepted = await studentContract.getPastEvents("Transcript", {
+      fromBlock: 0,
+      toBlock: "latest",
+      filter: {
+        provider: isProvider ? accounts[0] : false,
+        owner: isProvider ? false : accounts[0],
+      },
+    });
+    setAccepted(accepted);
+    setLoading(false);
   }, []);
   return (
     <div>
-      {registered === undefined || name === undefined ? (
+      {loading ? (
         <LoadingWheel />
       ) : (
-        false
+        <>
+          <Navbar />
+          <div id="account-wrapper">
+            <div id="account-content">
+              <div>
+                <RegisteredAccount />
+              </div>
+              <div>
+                <NumberTranscripts text="pending" number={requests.length} />
+              </div>
+              <div>
+                <NumberTranscripts text="accepted" number={accepted.length} />
+              </div>
+            </div>
+          </div>
+        </>
       )}
-
-      <Navbar />
-      <div id="account-wrapper">
-        <div id="account-content">
-          {registered ? (
-            <div>
-              <div className="home-header">
-                Account: {name.first} {name.last}
-              </div>
-              <div className="text">Wallet: {account}</div>
-            </div>
-          ) : (
-            <div style={{ display: "grid", justifyItems: "center" }}>
-              <div className="text" style={{ marginBottom: 20 }}>
-                Link account to Student Mesh
-              </div>
-              <RegisterNameButton />
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

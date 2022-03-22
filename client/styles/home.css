@@ -52,12 +52,6 @@
   color: var(--primary);
 }
 
-.vertical-line {
-  background-color: white;
-  height: 170px;
-  width: 1px;
-}
-
 .home-header {
   color: white;
   font-family: "Cabin";
@@ -125,10 +119,6 @@
 }
 
 @media screen and (max-width: 1217px) {
-  .vertical-line {
-    width: 200px;
-    height: 1px;
-  }
   .home-button {
     padding: 1rem 1.5rem;
   }

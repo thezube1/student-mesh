@@ -48,7 +48,9 @@ function ConnectPage() {
       const web3 = new Web3(provider);
       const accounts = await web3.eth.getAccounts();
       dispatch(setAccount(accounts[0]));
-      const registeredWallet = await axios.get(`/api/wallet/${accounts[0]}`);
+      const registeredWallet = await axios.get(
+        `/api/wallet/${accounts[0].toLowerCase()}`
+      );
       if (registeredWallet.data.registered) {
         setRegistered(true);
         setFirst(registeredWallet.data.first);

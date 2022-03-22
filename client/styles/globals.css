@@ -68,6 +68,10 @@ a {
   color: white;
 }
 
+.purple-text {
+  color: var(--primary);
+}
+
 .text-bold {
   font-family: "Cabin";
   font-size: 20px;
@@ -106,6 +110,16 @@ a {
   max-width: 450px;
   width: 95%;
   height: 2px;
+}
+
+.vertical-line {
+  background-color: white;
+  height: 170px;
+  width: 1px;
+}
+
+.line-purple {
+  background-color: var(--primary);
 }
 
 #loadingWrapper {
@@ -194,6 +208,13 @@ a {
     left: 50px;
     right: 50px;
     bottom: 50px;
+  }
+}
+
+@media screen and (max-width: 1217px) {
+  .vertical-line {
+    width: 200px;
+    height: 1px;
   }
 }
 
