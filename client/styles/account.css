@@ -50,6 +50,12 @@
   line-height: 1;
 }
 
+.account-history-wrapper {
+  width: 700px;
+  display: grid;
+  justify-items: center;
+}
+
 @media screen and (max-width: 600px) {
   .account-number-wrapper {
     display: grid;

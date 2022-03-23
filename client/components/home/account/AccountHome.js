@@ -11,6 +11,7 @@ import getProvider from "../../libs/getProvider";
 
 import RegisteredAccount from "./RegisteredAccount";
 import NumberTranscripts from "./NumberTranscripts";
+import TranscriptHistory from "./TranscriptHistory";
 
 function AccountPage() {
   const wallet = useSelector((state) => state.account.account);
@@ -55,11 +56,22 @@ function AccountPage() {
               <div>
                 <RegisteredAccount />
               </div>
-              <div>
-                <NumberTranscripts text="pending" number={requests.length} />
-              </div>
-              <div>
-                <NumberTranscripts text="accepted" number={accepted.length} />
+              <div style={{ display: "flex" }}>
+                <div>
+                  <div>
+                    <NumberTranscripts
+                      text="pending"
+                      number={requests.length}
+                    />
+                  </div>
+                  <div>
+                    <NumberTranscripts
+                      text="accepted"
+                      number={accepted.length}
+                    />
+                  </div>
+                </div>
+                <TranscriptHistory />
               </div>
             </div>
           </div>
