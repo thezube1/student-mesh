@@ -19,7 +19,17 @@ function AccountPage() {
   const [requests, setRequests] = useState(undefined);
   const [accepted, setAccepted] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const [name, setName] = useState({ first: "", last: "" });
+  const [registered, setRegistered] = useState(undefined);
   useEffect(async () => {
+    // getting if registered user
+    const nameData = await axios.get(`/api/wallet/${wallet.toLowerCase()}`);
+    await setRegistered(nameData.data.registered);
+    if (nameData.data.registered) {
+      await setName({ first: nameData.data.first, last: nameData.data.last });
+    } else {
+      setName(false);
+    }
     // getting pending transcripts
     const requests = await axios.get(`/api/request/wallet/${wallet}`);
     setRequests(requests.data);
@@ -44,6 +54,8 @@ function AccountPage() {
     setAccepted(accepted);
     setLoading(false);
   }, []);
+
+  useEffect(async () => {}, []);
   return (
     <div>
       {loading ? (
@@ -54,7 +66,11 @@ function AccountPage() {
           <div id="account-wrapper">
             <div id="account-content">
               <div>
-                <RegisteredAccount />
+                <RegisteredAccount
+                  name={name}
+                  registered={registered}
+                  wallet={wallet}
+                />
               </div>
               <div style={{ display: "flex", gap: 20 }}>
                 <div>
@@ -71,7 +87,11 @@ function AccountPage() {
                     />
                   </div>
                 </div>
-                <TranscriptHistory data={requests} />
+                <TranscriptHistory
+                  data={requests}
+                  acceptedData={accepted}
+                  name={name}
+                />
               </div>
             </div>
           </div>

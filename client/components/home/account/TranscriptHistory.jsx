@@ -1,7 +1,6 @@
 import Providers from "../../../providers.json";
 
 function TranscriptHistory(props) {
-  console.log(props.data);
   return (
     <div className="account-bubble account-history-wrapper">
       <div className="header">Transcript History</div>
@@ -28,7 +27,9 @@ function TranscriptHistory(props) {
               </div>
               <div className="account-history-item">
                 <div className="vertical-line line-purple account-history-tab"></div>
-                <div className="text">Unknown</div>
+                <div className="text">
+                  {props.name.first} {props.name.last}
+                </div>
               </div>
               <div className="account-history-item">
                 <div className="vertical-line line-purple account-history-tab"></div>
@@ -36,7 +37,40 @@ function TranscriptHistory(props) {
               </div>
               <div className="account-history-item">
                 <div className="vertical-line line-purple account-history-tab"></div>
-                <div className="text">Request</div>
+                <div className="text">Pending</div>
+              </div>
+            </>
+          );
+        })}
+        {props.acceptedData.map((item) => {
+          return (
+            <>
+              <div className="account-history-item">
+                <div className="vertical-line line-purple account-history-tab"></div>
+                <div className="text">
+                  {Providers.providers.map((school) => {
+                    if (
+                      item.returnValues.provider.toLowerCase() ===
+                      school.wallet.toLowerCase()
+                    ) {
+                      return school.school;
+                    }
+                  })}
+                </div>
+              </div>
+              <div className="account-history-item">
+                <div className="vertical-line line-purple account-history-tab"></div>
+                <div className="text">
+                  {props.name.first} {props.name.last}
+                </div>
+              </div>
+              <div className="account-history-item">
+                <div className="vertical-line line-purple account-history-tab"></div>
+                <div className="text">{item.returnValues.header}</div>
+              </div>
+              <div className="account-history-item">
+                <div className="vertical-line line-purple account-history-tab"></div>
+                <div className="text">Accepted</div>
               </div>
             </>
           );
