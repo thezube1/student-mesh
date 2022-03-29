@@ -56,9 +56,9 @@ function AccountPage() {
               <div>
                 <RegisteredAccount />
               </div>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", gap: 20 }}>
                 <div>
-                  <div>
+                  <div style={{ marginBottom: 20 }}>
                     <NumberTranscripts
                       text="pending"
                       number={requests.length}
@@ -71,7 +71,7 @@ function AccountPage() {
                     />
                   </div>
                 </div>
-                <TranscriptHistory />
+                <TranscriptHistory data={requests} />
               </div>
             </div>
           </div>

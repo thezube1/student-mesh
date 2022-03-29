@@ -56,6 +56,31 @@
   justify-items: center;
 }
 
+.account-history-labels {
+  display: flex;
+  gap: 90px;
+}
+
+.account-history-divider {
+  background-color: #383838;
+  max-width: 600px;
+  width: 100vw;
+  height: 1px;
+  margin-bottom: 10px;
+}
+
+.account-history-tab {
+  height: 50px;
+  width: 2px;
+  margin-right: 10px;
+}
+
+.account-history-item {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
 @media screen and (max-width: 600px) {
   .account-number-wrapper {
     display: grid;
