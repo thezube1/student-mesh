@@ -56,29 +56,34 @@
   justify-items: center;
 }
 
-.account-history-labels {
-  display: flex;
-  gap: 90px;
-}
-
-.account-history-divider {
-  background-color: #383838;
-  max-width: 600px;
-  width: 100vw;
-  height: 1px;
-  margin-bottom: 10px;
+#account-history-content {
+  display: grid;
+  grid-template-columns: 120px 150px 200px 100px;
+  justify-content: center;
 }
 
 .account-history-tab {
-  height: 50px;
+  height: 40px;
   width: 2px;
   margin-right: 10px;
+}
+
+.account-history-header {
+  border-bottom: #383838;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  font-size: 1rem;
 }
 
 .account-history-item {
   display: flex;
   align-items: center;
-  margin-right: 50px;
+  border-bottom: #383838;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
 }
 
 @media screen and (max-width: 600px) {

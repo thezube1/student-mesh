@@ -5,17 +5,14 @@ function TranscriptHistory(props) {
   return (
     <div className="account-bubble account-history-wrapper">
       <div className="header">Transcript History</div>
-      <div className="account-history-labels">
-        <div className="header">School</div>
-        <div className="header">Reciever</div>
-        <div className="header">Description</div>
-        <div className="header">Status</div>
-      </div>
-      {/* {props.data.map((item) => {
-        return (
-          <div>
-            <div className="account-history-divider"></div>
-            <div style={{ display: "flex", marginLeft: 20 }}>
+      <div id="account-history-content">
+        <div className="header account-history-header">School</div>
+        <div className="header account-history-header">Reciever</div>
+        <div className="header account-history-header">Description</div>
+        <div className="header account-history-header">Status</div>
+        {props.data.map((item) => {
+          return (
+            <>
               <div className="account-history-item">
                 <div className="vertical-line line-purple account-history-tab"></div>
                 <div className="text">
@@ -41,10 +38,10 @@ function TranscriptHistory(props) {
                 <div className="vertical-line line-purple account-history-tab"></div>
                 <div className="text">Request</div>
               </div>
-            </div>
-          </div>
-        );
-      })}*/}
+            </>
+          );
+        })}
+      </div>
     </div>
   );
 }
