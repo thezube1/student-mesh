@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountReducer from "./reducers/accountReducer";
 import contractReducer from "./reducers/contractReducer";
+import layoutReducer from "./reducers/layoutReducer";
 import { combineReducers } from "redux";
 
 import {
@@ -25,6 +26,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   account: accountReducer,
   contract: contractReducer,
+  layout: layoutReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,6 +39,7 @@ const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export default store;

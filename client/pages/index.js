@@ -22,7 +22,7 @@ function Home() {
       </Head>
       {provider && account !== null ? (
         <ProviderHome />
-      ) : account !== null ? (
+      ) : account ? (
         <AccountHome />
       ) : (
         <DefaultHome />

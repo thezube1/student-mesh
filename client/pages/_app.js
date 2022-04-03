@@ -6,6 +6,7 @@ import "../styles/connect.css";
 import "../styles/account.css";
 import "../styles/provider.css";
 import "../styles/exchange.css";
+import "../styles/exchanges.css";
 import "../styles/approved.css";
 import "../styles/requests.css";
 import "../styles/about.css";

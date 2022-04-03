@@ -28,7 +28,9 @@ function TranscriptHistory(props) {
               <div className="account-history-item">
                 <div className="vertical-line line-purple account-history-tab"></div>
                 <div className="text">
-                  {props.name.first} {props.name.last}
+                  {!props.name
+                    ? "Unknown"
+                    : `${props.name.first} ${props.name.last}`}
                 </div>
               </div>
               <div className="account-history-item">

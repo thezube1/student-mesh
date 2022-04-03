@@ -1,0 +1,35 @@
+.exchanges-list-wrapper {
+  display: grid;
+  justify-content: center;
+  margin-top: 30vh;
+}
+
+.exchanges-list-content {
+  display: grid;
+  grid-template-columns: 200px 200px 300px 200px 130px;
+}
+
+.exchanges-header {
+  padding-left: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 0px;
+}
+
+.exchanges-item-container {
+  display: contents;
+  cursor: pointer;
+}
+
+.exchanges-item-wrapper {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  padding: 20px;
+  border-top-style: solid;
+  border-top-color: rgb(44, 44, 44);
+  border-top-width: 1px;
+}
+
+.exchanges-item-container:hover .exchanges-item-wrapper {
+  background-color: rgb(34, 34, 34);
+}

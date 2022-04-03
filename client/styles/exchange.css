@@ -41,3 +41,31 @@
 }
 
 */
+
+#change-view-wrapper {
+  border-radius: 10px;
+  background-color: rgb(78, 78, 78);
+  width: 80px;
+  height: 40px;
+  position: absolute;
+  right: 50px;
+  top: 100px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.change-view-item {
+  background-color: #151515;
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  transition: all 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
+}

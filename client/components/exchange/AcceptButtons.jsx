@@ -23,6 +23,13 @@ function AcceptButtons(props) {
       const response = await studentContract.methods
         .approveTranscript(props.provider, props.header, props.cid)
         .send({ from: accounts[0] });
+      await axios.put(`/api/approved`, {
+        provider: props.provider,
+        reciever: accounts[0],
+        header: props.header,
+        cid: props.cid,
+        txhash: response.transactionHash,
+      });
       await axios.delete(`/api/request/${props.id}`);
       Router.replace(`/exchanges/approved/${response.transactionHash}`);
       return null;
