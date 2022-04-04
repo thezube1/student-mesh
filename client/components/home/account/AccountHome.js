@@ -6,6 +6,7 @@ import Navbar from "../../navbar/navbar";
 import axios from "axios";
 import Web3 from "web3";
 import { STUDENTS_ABI, STUDENTS_ADDRESS } from "../../../config";
+import useWindowSize from "../../libs/useWindowSize";
 
 import getProvider from "../../libs/getProvider";
 
@@ -21,6 +22,7 @@ function AccountPage() {
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState({ first: "", last: "" });
   const [registered, setRegistered] = useState(undefined);
+  const size = useWindowSize();
   useEffect(async () => {
     // getting if registered user
     const nameData = await axios.get(`/api/wallet/${wallet.toLowerCase()}`);
@@ -72,7 +74,7 @@ function AccountPage() {
                   wallet={wallet}
                 />
               </div>
-              <div style={{ display: "flex", gap: 20 }}>
+              <div className="account-data-wrapper">
                 <div>
                   <div style={{ marginBottom: 20 }}>
                     <NumberTranscripts
@@ -87,11 +89,15 @@ function AccountPage() {
                     />
                   </div>
                 </div>
-                <TranscriptHistory
-                  data={requests}
-                  acceptedData={accepted}
-                  name={name}
-                />
+                {size.width > 750 ? (
+                  <TranscriptHistory
+                    data={requests}
+                    acceptedData={accepted}
+                    name={name}
+                  />
+                ) : (
+                  false
+                )}
               </div>
             </div>
           </div>
