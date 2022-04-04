@@ -63,8 +63,8 @@ function ListView(props) {
             ];
 
             return (
-              <Link href={`/exchanges/request/${item._id}`}>
-                <div className="exchanges-item-container" key={index}>
+              <Link href={`/exchanges/request/${item._id}`} key={index}>
+                <div className="exchanges-item-container">
                   <div className="exchanges-item-wrapper">
                     <div className="vertical-line line-purple account-history-tab"></div>
                     <div className="text">
@@ -103,8 +103,11 @@ function ListView(props) {
           })}
           {props.approvedData.map((item, index) => {
             return (
-              <Link href={`/exchanges/approved/${item.transactionHash}`}>
-                <div className="exchanges-item-container" key={index}>
+              <Link
+                href={`/exchanges/approved/${item.transactionHash}`}
+                key={index}
+              >
+                <div className="exchanges-item-container">
                   <div className="exchanges-item-wrapper">
                     <div className="vertical-line line-purple account-history-tab"></div>
                     <div className="text">
