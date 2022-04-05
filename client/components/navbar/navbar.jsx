@@ -39,7 +39,7 @@ function Navbar() {
           id="nav-exchanges"
           className={`navbar-item ${mobile ? "navbar-item-mobile" : false}`}
         >
-          Exchanges
+          Transcripts
         </div>
       </Link>
     );

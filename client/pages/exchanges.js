@@ -10,6 +10,7 @@ import getProvider from "../components/libs/getProvider";
 import ChangeView from "../components/exchanges/ChangeView";
 import CardView from "../components/exchanges/CardView";
 import ListView from "../components/exchanges/ListView";
+import useWindowSize from "../components/libs/useWindowSize";
 
 function ExchangePage() {
   const [requestData, setRequestData] = useState(undefined);
@@ -17,6 +18,7 @@ function ExchangePage() {
   const [loading, setLoading] = useState(true);
   const isProvider = useSelector((state) => state.account.provider.isProvider);
   const layout = useSelector((state) => state.layout.layout);
+  const size = useWindowSize();
 
   useEffect(async () => {
     setLoading(true);
@@ -25,6 +27,7 @@ function ExchangePage() {
     const accounts = await web3.eth.getAccounts();
 
     const res = await axios.get(`/api/request/wallet/${accounts[0]}`);
+    const accepted = await axios.get(`/api/approved/wallet/${accounts[0]}`);
 
     const studentContract = new web3.eth.Contract(
       STUDENTS_ABI,
@@ -40,6 +43,13 @@ function ExchangePage() {
       },
     });
 
+    retrieval.map((chain, index) => {
+      accepted.data.map((stored) => {
+        if (chain.transactionHash === stored.txhash) {
+          chain.date = stored._id;
+        }
+      });
+    });
     setApprovedData(retrieval);
     setRequestData(res.data);
     setLoading(false);
@@ -52,7 +62,7 @@ function ExchangePage() {
         <LoadingWheel />
       ) : (
         <>
-          <ChangeView />
+          {size.width > 1000 ? <ChangeView /> : false}
           {layout === "card" ? (
             <CardView approvedData={approvedData} requestData={requestData} />
           ) : (

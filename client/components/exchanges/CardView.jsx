@@ -6,7 +6,9 @@ function CardView(props) {
     <div id="provider-exchanges-wrapper">
       <div className="provider-exchanges-section">
         <div>
-          <div className="title pending-exchanges-title">Pending Exchanges</div>
+          <div className="title pending-exchanges-title">
+            Pending Transcripts
+          </div>
         </div>
         <div>
           {props.requestData.map((item, index) => {
@@ -29,7 +31,9 @@ function CardView(props) {
         </Link>
       </div>
       <div className="provider-exchanges-section">
-        <div className="title pending-exchanges-title">Completed Exchanges</div>
+        <div className="title pending-exchanges-title">
+          Approved Transcripts
+        </div>
         {props.approvedData
           .slice(0)
           .reverse()

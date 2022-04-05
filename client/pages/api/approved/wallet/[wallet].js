@@ -22,7 +22,7 @@ apiRoute.get(async (req, res) => {
   await client.connect();
   const db = client.db(dbName);
 
-  const collection = db.collection("requests");
+  const collection = db.collection("accepted");
 
   const findResult = await collection
     .find({

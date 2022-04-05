@@ -1,36 +1,23 @@
 import Link from "next/link";
 import Providers from "../../providers.json";
 import axios from "axios";
+import { useState } from "react";
 
 function ListView(props) {
-  const getDate = async (txhash) => {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const data = await axios.get(`/api/approved/${txhash}`);
-    /*
-    const date = new Date(
-      parseInt(data.data._id.toString().substring(0, 8), 16) * 1000
-    );
-    return `${
-      months[date.getMonth()]
-    } ${data.getDate()}, ${date.getFullYear()}`;
-    */
-    console.log(
-      `${months[date.getMonth()]} ${data.getDate()}, ${date.getFullYear()}`
-    );
-  };
+  const [months, setMonths] = useState([
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ]);
 
   return (
     <div className="exchanges-list-wrapper">
@@ -47,20 +34,6 @@ function ListView(props) {
             const date = new Date(
               parseInt(item._id.toString().substring(0, 8), 16) * 1000
             );
-            const months = [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
-              "August",
-              "September",
-              "October",
-              "November",
-              "December",
-            ];
 
             return (
               <Link href={`/exchanges/request/${item._id}`} key={index}>
@@ -102,6 +75,15 @@ function ListView(props) {
             );
           })}
           {props.approvedData.map((item, index) => {
+            let date;
+            if (item.date) {
+              date = new Date(
+                parseInt(item.date.toString().substring(0, 8), 16) * 1000
+              );
+            } else {
+              date = false;
+            }
+
             return (
               <Link
                 href={`/exchanges/approved/${item.transactionHash}`}
@@ -131,7 +113,12 @@ function ListView(props) {
                   </div>
                   <div className="exchanges-item-wrapper">
                     <div className="vertical-line line-purple account-history-tab"></div>
-                    <div className="text"></div>
+                    <div className="text">
+                      {!date
+                        ? "Unknown"
+                        : `${months[date.getMonth()]} ${date.getDate()},
+                      ${date.getFullYear()}`}
+                    </div>
                   </div>
                   <div className="exchanges-item-wrapper">
                     <div className="vertical-line line-purple account-history-tab"></div>
