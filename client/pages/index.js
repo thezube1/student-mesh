@@ -12,14 +12,6 @@ function Home() {
 
   return (
     <div>
-      <Head>
-        <title>Student Mesh</title>
-        <meta
-          name="description"
-          content="A distributed computing solution to storing student data"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       {provider && account !== null ? (
         <ProviderHome />
       ) : account ? (
