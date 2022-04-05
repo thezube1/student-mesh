@@ -18,12 +18,20 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import LoadingWheel from "../components/loading/LoadingWheel";
 import LoadBlockchain from "../components/routes/loadBlockchain";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
   let persistor = persistStore(store);
   return (
     <Provider store={store}>
       <PersistGate loading={<LoadingWheel />} persistor={persistor}>
+        <Head>
+          <title>Student Mesh</title>
+          <meta
+            name="description"
+            content="A distributed computing solution to storing student data"
+          />
+        </Head>
         <LoadBlockchain />
         <Component {...pageProps} />
       </PersistGate>

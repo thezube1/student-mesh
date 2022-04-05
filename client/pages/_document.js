@@ -10,11 +10,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Student Mesh</title>
-          <meta
-            name="description"
-            content="A distributed computing solution to storing student data"
-          />
           <link
             rel="apple-touch-icon"
             sizes="180x180"

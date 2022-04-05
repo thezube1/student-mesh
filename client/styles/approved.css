@@ -1,5 +1,6 @@
 .approved-exchanges-wrapper {
   padding: 75px;
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
 }
